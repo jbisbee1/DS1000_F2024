@@ -3,7 +3,7 @@ title: "Clustering Part 2"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-04-09"
+date: "Due Date: 2024-11-14"
 output: html_document
 ---
 
@@ -78,7 +78,7 @@ Note that we are going to compare pre-post presidency but you have the tools, an
 So let's get to it!
 
 ```{r}
-tweets <- read_rds(file="https://github.com/jbisbee1/DS1000_S2024/raw/main/data/Trumptweets.Rds")
+tweets <- read_rds(file="https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Trumptweets.Rds")
 ```
 
 So let's start by describing our data graphically.  How frequently was President Trump tweeting throughout the time series we possess?
@@ -350,7 +350,7 @@ tweet_words <- anti_join(tweet_words, stop_words, by = "word")
 We can also just read in the already-wrangled data `tweet_words` and proceed from here. 
 
 ```{r}
-tweet_words <- read_rds(file="https://github.com/jbisbee1/DS1000_S2024/raw/main/data//Trump_tweet_words.Rds")
+tweet_words <- read_rds(file="https://github.com/jbisbee1/DS1000_F2024/raw/main/data//Trump_tweet_words.Rds")
 ```
 
 So what are the most commonly tweeted word stems?

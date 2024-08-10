@@ -3,7 +3,7 @@ title: "EVEN MORE conditional relationships"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-02-13"
+date: "Due Date: 2024-09-24"
 output: html_document
 ---
 
@@ -19,7 +19,7 @@ Recall that we have tested Trump's theory that the MSM was biased against him. W
 ```{r}
 require(tidyverse)
 require(scales)
-Pres2020.PV <- read_rds(file="https://github.com/jbisbee1/DS1000_S2024/raw/main/data/Pres2020_PV.Rds")
+Pres2020.PV <- read_rds(file="https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Pres2020_PV.Rds")
 Pres2020.PV <- Pres2020.PV %>%
                 mutate(Trump = Trump/100,
                       Biden = Biden/100,
@@ -318,7 +318,7 @@ New functions and libraries:
 First load the data of all state-level polls for the 2020 presidential election.
 
 ```{r}
-Pres2020.StatePolls <- read_rds(file="https://github.com/jbisbee1/DS1000_S2024/raw/main/data/Pres2020_StatePolls.Rds")
+Pres2020.StatePolls <- read_rds(file="https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Pres2020_StatePolls.Rds")
 glimpse(Pres2020.StatePolls)
 ```
 

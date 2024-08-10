@@ -26,22 +26,29 @@ class: center, middle, inverse, title-slide
 ### Vanderbilt University
 ]
 .date[
-### Slides Updated: 2024-03-31
+### Slides Updated: 2024-08-10
 ]
 
 ---
 
 
+&lt;style type="text/css"&gt;
+.small .remark-code { /*Change made here*/
+  font-size: 85% !important;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 50% !important;
+}
+&lt;/style&gt;
 
 
----
 
 # Returning to Trump
 
 
 ```r
 require(tidyverse)
-tweet_words &lt;- read_rds(file="https://github.com/jbisbee1/DS1000_S2024/raw/main/data/Trump_tweet_words.Rds")
+tweet_words &lt;- read_rds(file="https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Trump_tweet_words.Rds")
 tweet_words &lt;- tweet_words %&gt;% mutate(PostPresident = Tweeting.date &gt; as.Date('2016-11-06'))
 ```
 
@@ -156,7 +163,7 @@ odds3 %&gt;%
   geom_histogram()
 ```
 
-&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -170,7 +177,7 @@ odds3 %&gt;%
   scale_x_log10()
 ```
 
-&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -228,7 +235,7 @@ p &lt;- prepost_logodds %&gt;%
 p
 ```
 
-&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -277,16 +284,9 @@ p
 
 ```r
 require(tidytext) # Might need to install.packages('textdata')
-```
-
-```
-## Loading required package: tidytext
-```
-
-```r
 # nrc &lt;- get_sentiments("nrc")
 # If this doesn't work on your computer, just load it with read_rds()
-nrc &lt;- read_rds('https://github.com/jbisbee1/DS1000_S2024/raw/main/data/nrc.Rds')
+nrc &lt;- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/nrc.Rds')
 ```
 
 ---
@@ -352,15 +352,6 @@ word_freq_sentiment &lt;- word_freq %&gt;%
     inner_join(nrc, by = "word") 
 ```
 
-```
-## Warning in inner_join(., nrc, by = "word"): Detected an unexpected many-to-many relationship between
-## `x` and `y`.
-## ℹ Row 7 of `x` matches multiple rows in `y`.
-## ℹ Row 2 of `y` matches multiple rows in `x`.
-## ℹ If a many-to-many relationship is expected, set
-##   `relationship = "many-to-many"` to silence this warning.
-```
-
 ---
 
 # Sentiment overall
@@ -386,7 +377,7 @@ p &lt;- word_freq_sentiment %&gt;%
 p
 ```
 
-&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -500,7 +491,7 @@ p &lt;- tweet_sentiment_summary %&gt;%
 p
 ```
 
-&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -537,7 +528,7 @@ p &lt;- tweet_sentiment %&gt;%
 p
 ```
 
-&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -579,7 +570,7 @@ p &lt;- prepost_logodds %&gt;%
 p
 ```
 
-&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -653,7 +644,7 @@ p &lt;- roc_curve(forAUC,'truth','preds') %&gt;%
 p
 ```
 
-&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_20_slides_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -723,13 +714,7 @@ toTest %&gt;%
 toanal &lt;- toanal %&gt;%
   left_join(tweet_sentiment_summary) %&gt;%
   drop_na()
-```
 
-```
-## Joining with `by = join_by(document, PostPresident)`
-```
-
-```r
 m1 &lt;- glm(PostPresident ~ logodds,toanal,family = binomial)
 m2 &lt;- glm(PostPresident ~ logodds + sentiment,toanal,family = binomial)
 m3 &lt;- glm(PostPresident ~ logodds + anger + anticipation + disgust + fear + joy + sadness + surprise + trust,toanal,family = binomial)

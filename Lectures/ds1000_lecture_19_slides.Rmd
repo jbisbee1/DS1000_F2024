@@ -32,8 +32,9 @@ output:
 ```
 
 ```{r,include=F}
+set.seed(123)
 options(width=60)
-knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5)
+knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5,message=F,warning=F)
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
@@ -155,7 +156,7 @@ knitr::knit_hooks$set(chunk = function(x, options) {
   
 ```{r,message=F,warning=F}
 require(tidyverse)
-tweets <- read_rds(file="https://github.com/jbisbee1/DS1000_S2024/raw/main/data/Trumptweets.Rds")
+tweets <- read_rds(file="https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Trumptweets.Rds")
 ```
 
 --
@@ -342,7 +343,7 @@ ggplotly(gg)
 --
 
 ```{r}
-tweet_words <- read_rds(file="https://github.com/jbisbee1/DS1000_S2024/raw/main/data/Trump_tweet_words.Rds")
+tweet_words <- read_rds(file="https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Trump_tweet_words.Rds")
 ```
 
 ---

@@ -35,7 +35,7 @@ output:
 ```{r,include=F}
 set.seed(123)
 options(width=60)
-knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5)
+knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5,message=F,warning=F)
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
@@ -544,7 +544,7 @@ ggsave(plot = p,filename = paste0('./figs/regPlotFirst_6.png'),device = 'png',wi
 ```{r,message = F,warning=F}
 require(tidyverse)
 
-debt <- read_rds('https://github.com/jbisbee1/DS1000_S2024/raw/main/data/sc_debt.Rds')
+debt <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds')
 
 glimpse(debt)
 ```
@@ -1083,4 +1083,4 @@ summary(model_earn_sat)
   
   1. Work through ds1000_hw_12.Rmd
   
-  2. Problem set 7 (last before the midterm!)
+  2. Problem set 7

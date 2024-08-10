@@ -3,7 +3,7 @@ title: "Confidence and Uncertainty"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-02-22"
+date: "Due Date: 2024-10-03"
 output: html_document
 ---
 
@@ -21,10 +21,10 @@ library(tidyverse)
 
 ## The Data
 
-The data for today is game by team summary data for every game played from 2017 to 2019. Make sure to download the data ([game_summary.Rds](https://github.com/jbisbee1/DS1000_S2024/raw/main/data/game_summary.Rds)) and save to your `data` folder!
+The data for today is game by team summary data for every game played from 2017 to 2019. Make sure to download the data ([game_summary.Rds](https://github.com/jbisbee1/DS1000_F2024/raw/main/data/game_summary.Rds)) and save to your `data` folder!
 
 ```{r}
-gms<-read_rds("https://github.com/jbisbee1/DS1000_S2024/raw/main/data/game_summary.Rds")
+gms<-read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/game_summary.Rds")
 gms
 ```
 

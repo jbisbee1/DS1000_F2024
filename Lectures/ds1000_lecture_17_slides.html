@@ -4,7 +4,7 @@
     <title>Classification</title>
     <meta charset="utf-8" />
     <meta name="author" content="Prof. Bisbee" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.22/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/lexis.css" type="text/css" />
     <link rel="stylesheet" href="css/lexis-fonts.css" type="text/css" />
@@ -26,7 +26,7 @@ class: center, middle, inverse, title-slide
 ### Vanderbilt University
 ]
 .date[
-### Slides Updated: 2024-03-16
+### Slides Updated: 2024-08-10
 ]
 
 ---
@@ -175,7 +175,7 @@ class: center, middle, inverse, title-slide
 require(tidyverse)
 require(scales)
 require(tidymodels)
-fn &lt;- read_rds('C:/Users/bisbeejh/Dropbox/2024_spring/DS1000_S2024/data/fn_cleaned_final.rds')
+fn &lt;- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/fn_cleaned_final.rds')
 ```
 
 
@@ -380,13 +380,6 @@ cvRes %&gt;%
 
 ```r
 require(ranger) # Fast random forests package
-```
-
-```
-## Warning: package 'ranger' was built under R version 4.3.3
-```
-
-```r
 rf.f &lt;- ranger(formula = as.formula(form.full),data = fn)
 
 toEval &lt;- fn %&gt;%
@@ -400,7 +393,7 @@ roc_auc(toEval,truth,prob_won)
 ## # A tibble: 1 × 3
 ##   .metric .estimator .estimate
 ##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-## 1 roc_auc binary         0.838
+## 1 roc_auc binary         0.834
 ```
 
 ---
@@ -492,13 +485,13 @@ rf.full$variable.importance
 
 ```
 ##               hits            assists           accuracy 
-##        0.013744542        0.003357181        0.004465332 
+##       0.0127008236       0.0041781300       0.0040000719 
 ##         head_shots  damage_to_players       eliminations 
-##        0.006363476        0.032384850        0.010595106 
+##       0.0056862337       0.0324847910       0.0113115467 
 ##            revives  distance_traveled materials_gathered 
-##        0.004715412        0.070833478        0.025052451 
+##       0.0052432709       0.0680064854       0.0251720901 
 ##       mental_state          startTime      gameIdSession 
-##        0.003392765        0.002135140        0.026763760
+##       0.0032816274       0.0005983671       0.0253125537
 ```
 
 ---
@@ -551,10 +544,6 @@ toplot %&gt;%
 
 ```r
 require(glmnet)
-```
-
-```
-## Warning: package 'glmnet' was built under R version 4.3.2
 ```
 
 ---
@@ -649,8 +638,6 @@ vimpLass %&gt;%
 
 - **Homework:**
 
-  - Problem Set 9 (due 2024-03-29 by 11:59PM)
-  
   - HW 17
 
     </textarea>

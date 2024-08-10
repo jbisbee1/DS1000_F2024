@@ -4,7 +4,7 @@
     <title>Multivariate Analysis</title>
     <meta charset="utf-8" />
     <meta name="author" content="Prof. Bisbee" />
-    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.22/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/lexis.css" type="text/css" />
     <link rel="stylesheet" href="css/lexis-fonts.css" type="text/css" />
@@ -26,11 +26,20 @@ class: center, middle, inverse, title-slide
 ### Vanderbilt University
 ]
 .date[
-### Slides Updated: 2024-01-08
+### Slides Updated: 2024-08-10
 ]
 
 ---
 
+
+&lt;style type="text/css"&gt;
+.small .remark-code { /*Change made here*/
+  font-size: 85% !important;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 50% !important;
+}
+&lt;/style&gt;
 
 
 
@@ -59,7 +68,7 @@ class: center, middle, inverse, title-slide
 
 ```r
 require(tidyverse)
-poll &lt;- read_rds('https://github.com/jbisbee1/DS1000_S2024/raw/main/data/Pres2020_PV.Rds')
+poll &lt;- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Pres2020_PV.Rds')
 
 poll &lt;- poll %&gt;%
   mutate(Trump = Trump/100,
@@ -97,7 +106,7 @@ pRQ &lt;- poll %&gt;%
 pRQ 
 ```
 
-&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -312,7 +321,7 @@ pMode &lt;- poll %&gt;%
 pMode
 ```
 
-&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -356,7 +365,7 @@ pModeDens &lt;- toplot %&gt;%
 pModeDens
 ```
 
-&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -423,7 +432,7 @@ pModeHist &lt;- toplot %&gt;%
 pModeHist
 ```
 
-&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -460,7 +469,7 @@ pModeDens &lt;- toplot %&gt;%
 pModeDens
 ```
 
-&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -495,7 +504,7 @@ pModeBox &lt;- toplot %&gt;%
 pModeBox
 ```
 
-&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -528,7 +537,7 @@ pModeBox &lt;- toplot %&gt;%
 pModeBox + coord_flip()
 ```
 
-&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -564,7 +573,7 @@ pModeViol &lt;- toplot %&gt;%
 pModeViol + geom_hline(yintercept = 0,linetype = 'dashed')
 ```
 
-&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -617,7 +626,7 @@ pSupp &lt;- poll %&gt;%
 pSupp
 ```
 
-&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -658,7 +667,7 @@ pSupp &lt;- poll %&gt;%
 pSupp
 ```
 
-&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -695,7 +704,7 @@ pSupp &lt;- poll %&gt;%
 pSupp
 ```
 
-&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -726,11 +735,6 @@ pSupp &lt;- poll %&gt;%
                      labels= scales::percent_format(accuracy = 1))
 ```
 
-```
-## `summarise()` has grouped output by 'Biden'. You can
-## override using the `.groups` argument.
-```
-
 ---
 
 # `size`
@@ -740,7 +744,7 @@ pSupp &lt;- poll %&gt;%
 pSupp
 ```
 
-&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_8_slides_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -793,7 +797,7 @@ pSupp
 
 --
 
-  - The password to take the quiz is #### &lt;!-- 3369 --&gt;
+  - The password to take the quiz is #### &lt;!-- 3326 --&gt;
   
 --
 

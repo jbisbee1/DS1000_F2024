@@ -35,7 +35,7 @@ output:
 ```{r,include=F}
 set.seed(123)
 options(width=60)
-knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5)
+knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5,message=F,warning=F)
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
@@ -1036,11 +1036,15 @@ data.frame(step = c('Observation','Question','Theory','Hypothesis','Data Collect
 
 # Grades: PSets
 
-- 11 in total, only 10 are graded (one freebie)
+- 9 in total, only 8 are graded (one freebie)
 
 --
 
   - Pset 0 doesn't count
+  
+--
+
+  - 5 points each + 1 EC
   
 --
 
@@ -1070,13 +1074,13 @@ data.frame(step = c('Observation','Question','Theory','Hypothesis','Data Collect
 
 # Grades: Exams
 
-- 2 in total: midterm on March 7th, final on April 25th
+- 2 in total: midterm on October 8th, final on December 10th
 
 --
 
-- Midterm is 20% of final grade
+- Midterm is 20 points + 5 EC
 
-- Final (cumulative) is 25% of final grade
+- Final (cumulative) is 25 points + 5 EC
 
 
 ---
@@ -1085,7 +1089,7 @@ data.frame(step = c('Observation','Question','Theory','Hypothesis','Data Collect
 
 - Taken at beginning of each lecture
 
-- Each quiz is worth two points
+- Each quiz is worth one point
 
 - 19 total quizzes, only 15 count toward final grade (four freebies)
 
@@ -1097,7 +1101,7 @@ data.frame(step = c('Observation','Question','Theory','Hypothesis','Data Collect
   
   - 50% of quiz grade is just taking it (effectively a way to track attendance)
   
-  - 50% of quiz grade are questions related to lecture **and homework**
+  - 50% of quiz grade are questions related to **homework**
 
 
 ---
@@ -1123,8 +1127,7 @@ data.frame(step = c('Observation','Question','Theory','Hypothesis','Data Collect
 
 # The Syllabus
 
-<center><img src="figs/syllabus.png" width="100%"></center>
-
+- (Go to Github)
 
 ---
 

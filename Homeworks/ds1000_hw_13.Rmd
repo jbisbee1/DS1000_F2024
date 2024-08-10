@@ -3,7 +3,7 @@ title: "Binary Predictors and Multiple Regression"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-03-05"
+date: "Due Date: 2024-10-22"
 output: html_document
 ---
 

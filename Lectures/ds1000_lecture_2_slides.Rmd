@@ -35,7 +35,7 @@ output:
 ```{r,include=F}
 set.seed(123)
 options(width=60)
-knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5)
+knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5,message=F,warning=F)
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
@@ -590,7 +590,7 @@ require(tidyverse)
 
 --
 
-- You can save it locally from the course  [github page](https://github.com/jbisbee1/DS1000_S2024/blob/main/data/sc_debt.Rds) and then load it from your computer
+- You can save it locally from the course  [github page](https://github.com/jbisbee1/DS1000_F2024/blob/main/data/sc_debt.Rds) and then load it from your computer
   
 --
 
@@ -607,7 +607,7 @@ require(tidyverse)
 --
 
 ```{r}
-df <- read_rds('https://github.com/jbisbee1/DS1000_S2024/raw/main/data/sc_debt.Rds')
+df <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds')
 ```
 
 

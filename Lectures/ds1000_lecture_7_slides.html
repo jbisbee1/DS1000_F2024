@@ -4,7 +4,7 @@
     <title>Multivariate Analysis</title>
     <meta charset="utf-8" />
     <meta name="author" content="Prof. Bisbee" />
-    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.22/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/lexis.css" type="text/css" />
     <link rel="stylesheet" href="css/lexis-fonts.css" type="text/css" />
@@ -26,11 +26,20 @@ class: center, middle, inverse, title-slide
 ### Vanderbilt University
 ]
 .date[
-### Slides Updated: 2024-01-08
+### Slides Updated: 2024-08-10
 ]
 
 ---
 
+
+&lt;style type="text/css"&gt;
+.small .remark-code { /*Change made here*/
+  font-size: 85% !important;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 50% !important;
+}
+&lt;/style&gt;
 
 
 
@@ -143,7 +152,7 @@ class: center, middle, inverse, title-slide
 ```r
 require(tidyverse)
 
-mi_ep &lt;- read_rds('https://github.com/jbisbee1/DS1000_S2024/raw/main/data/MI2020_ExitPoll_small.rds')
+mi_ep &lt;- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/MI2020_ExitPoll_small.rds')
 ```
 
 ---
@@ -579,7 +588,7 @@ toplot &lt;- mi_ep %&gt;%
     geom_bar(color="black",alpha = .4))
 ```
 
-&lt;img src="ds1000_lecture_7_slides_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_7_slides_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -594,7 +603,7 @@ toplot &lt;- mi_ep %&gt;%
 pReasonOverall + coord_flip()
 ```
 
-&lt;img src="ds1000_lecture_7_slides_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_7_slides_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -625,7 +634,7 @@ pReasonChoice &lt;- toplot %&gt;%
 pReasonChoice
 ```
 
-&lt;img src="ds1000_lecture_7_slides_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_7_slides_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -646,16 +655,7 @@ toplot %&gt;%
     geom_bar(position="dodge") + coord_flip()
 ```
 
-```
-## Warning: The following aesthetics were dropped during statistical
-## transformation: fill
-## ℹ This can happen when ggplot fails to infer the correct
-##   grouping structure in the data.
-## ℹ Did you forget to specify a `group` aesthetic or to
-##   convert a numerical variable into a factor?
-```
-
-&lt;img src="ds1000_lecture_7_slides_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_7_slides_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -696,7 +696,7 @@ pVoteSex &lt;- toplot %&gt;%
 pVoteSex
 ```
 
-&lt;img src="ds1000_lecture_7_slides_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="ds1000_lecture_7_slides_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -710,7 +710,7 @@ pVoteSex
 
 --
 
-  - The password to take the quiz is #### &lt;!-- 4413 --&gt;
+  - The password to take the quiz is #### &lt;!-- 3326 --&gt;
   
 --
 

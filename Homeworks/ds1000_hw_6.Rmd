@@ -3,7 +3,7 @@ title: "Conditional Relationships"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-02-06"
+date: "Due Date: 2024-09-17"
 output: html_document
 ---
 
@@ -29,7 +29,7 @@ So load in the Michigan 2020 Exit Poll Data.
 ```{r message=FALSE}
 library(tidyverse)
 library(scales)
-mi_ep <- read_rds("https://github.com/jbisbee1/DS1000_S2024/raw/main/data/MI2020_ExitPoll_small.rds")
+mi_ep <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/MI2020_ExitPoll_small.rds")
 MI_final_small <- mi_ep %>%
   filter(preschoice=="Donald Trump, the Republican" | preschoice=="Joe Biden, the Democrat") %>%
   mutate(BidenVoter=ifelse(preschoice=="Joe Biden, the Democrat",1,0),

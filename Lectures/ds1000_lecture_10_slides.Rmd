@@ -35,7 +35,7 @@ output:
 ```{r,include=F}
 set.seed(123)
 options(width=60)
-knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5)
+knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5,message=F,warning=F)
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
@@ -111,7 +111,7 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 
 ```{r,message=F,warning=F}
 require(tidyverse)
-nba <- read_rds('https://github.com/jbisbee1/DS1000_S2024/raw/main/data/nba_players_2018.Rds')
+nba <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/nba_players_2018.Rds')
 glimpse(nba %>% select(tov,isRookie))
 ```
 
@@ -769,7 +769,7 @@ bsRes %>%
 
 --
   
-  1. Work through ds1000_hw_10.Rmd (regression!)
+  1. Work through ds1000_hw_10.Rmd
   
   2. Problem Set 6 (on Brightspace)
 

@@ -3,7 +3,7 @@ title: "Confidence and Uncertainty"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-02-20"
+date: "Due Date: 2024-10-01"
 output: html_document
 ---
 
@@ -24,7 +24,7 @@ Here's the data:
 
 ```{r}
 require(tidyverse)
-nba<-read_rds("https://github.com/jbisbee1/DS1000_S2024/raw/main/data/nba_players_2018.Rds")
+nba<-read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/nba_players_2018.Rds")
 ```
 
 This data contains the following variables:

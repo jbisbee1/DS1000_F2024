@@ -3,7 +3,7 @@ title: "Visualization in `R`"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-01-23"
+date: "Due Date: 2024-09-03"
 output: html_document
 ---
 
@@ -23,10 +23,10 @@ library(tidyverse)
 ```
 
 ## Load The Data
-Once `tidyverse` is loaded, you can download the data directly from  [GitHub](https://github.com/jbisbee1/DS1000_S2024/raw/main/data/sc_debt.Rds) using the `read_rds()` function. You should then open it in `R` by assigning it to an object with the `<-` command.
+Once `tidyverse` is loaded, you can download the data directly from  [GitHub](https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds) using the `read_rds()` function. You should then open it in `R` by assigning it to an object with the `<-` command.
 
 ```{r}
-df<-read_rds("https://github.com/jbisbee1/DS1000_S2024/raw/main/data/sc_debt.Rds") 
+df<-read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds") 
 names(df)
 ```
 

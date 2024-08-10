@@ -3,7 +3,7 @@ title: "More conditional relationships"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-02-08"
+date: "Due Date: 2024-09-19"
 output: html_document
 ---
 
@@ -21,7 +21,7 @@ Polls were done using lots of different methods in 2020.
 
 ```{r}
 require(tidyverse)
-Pres2020.PV <- read_rds(file="https://github.com/jbisbee1/DS1000_S2024/raw/main/data/Pres2020_PV.Rds")
+Pres2020.PV <- read_rds(file="https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Pres2020_PV.Rds")
 Pres2020.PV <- Pres2020.PV %>%
                 mutate(Trump = Trump/100,
                       Biden = Biden/100,

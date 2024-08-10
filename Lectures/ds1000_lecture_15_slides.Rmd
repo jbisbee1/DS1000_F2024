@@ -33,7 +33,7 @@ output:
 
 ```{r,include=F}
 options(width=60)
-knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5)
+knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5,message=F,warning=F)
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
@@ -49,7 +49,7 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 
 ```{r,message=F,warning=F}
 require(tidyverse)
-fn <- read_rds('https://github.com/jbisbee1/DS1000_S2024/raw/main/data/fn_cleaned_final.rds')
+fn <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/fn_cleaned_final.rds')
 ```
 
 
@@ -834,7 +834,7 @@ cvRes %>%
 
 - **Homework:**
 
-  - Problem Set 8 (due 2024-03-22 by 11:59PM)
+  - Problem Set 8
   
   - HW 15
 

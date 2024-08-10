@@ -3,7 +3,7 @@ title: "Regression"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-02-27"
+date: "Due Date: 2024-10-15"
 output: html_document
 ---
 
@@ -46,7 +46,7 @@ Let's load the data and packages first.
 ```{r}
 require(tidyverse)
 require(plotly)
-sc_debt <- read_rds('https://github.com/jbisbee1/DS1000_S2024/raw/main/data/sc_debt.Rds')
+sc_debt <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds')
 ```
 
 Now let's look at our two variables of interest before we do anything else. Are these continuous? Categorical?

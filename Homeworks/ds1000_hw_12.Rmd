@@ -3,7 +3,7 @@ title: "Regression Part 2"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-02-29"
+date: "Due Date: 2024-10-17"
 output: html_document
 ---
 
@@ -34,7 +34,7 @@ library(scales)
 Load in data.
 
 ```{r}
-mv<-read_rds("https://github.com/jbisbee1/DS1000_S2024/raw/main/data/mv.Rds")%>%
+mv<-read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/mv.Rds")%>%
   filter(!is.na(budget))
 
 glimpse(mv)

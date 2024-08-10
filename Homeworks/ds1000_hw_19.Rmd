@@ -3,7 +3,7 @@ title: "Clustering Part 3"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-04-11"
+date: "Due Date: 2024-11-19"
 output: html_document
 ---
 
@@ -19,7 +19,7 @@ We are going to start from the prepared `Trump_tweet_words.Rds` file from last t
 require(tidyverse)
 require(tidytext)
 require(scales)
-tweet_words <- read_rds(file="https://github.com/jbisbee1/DS1000_S2024/raw/main/data/Trump_tweet_words.Rds") %>% # Note you can add data manipulations directly to the code that opens the file!
+tweet_words <- read_rds(file="https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Trump_tweet_words.Rds") %>% # Note you can add data manipulations directly to the code that opens the file!
   mutate(PostPresident = Tweeting.date > "2016-11-03")
 
 ```

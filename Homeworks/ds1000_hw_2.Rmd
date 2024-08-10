@@ -3,7 +3,7 @@ title: "Manipulating data in `R`"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-01-18"
+date: "Due Date: 2024-08-29"
 output: html_document
 ---
 
@@ -26,10 +26,10 @@ library(tidyverse)
 ```
 
 ## Load The Data
-Remember to load the data from  [GitHub](https://github.com/jbisbee1/DS1000_S2024/raw/main/data/sc_debt.Rds) and save it to the `data` folder you created. You should then open it in `R` by assigning it to an object with the `<-` command.
+Remember to load the data from  [GitHub](https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds) and save it to the `data` folder you created. You should then open it in `R` by assigning it to an object with the `<-` command.
 
 ```{r}
-df<-read_rds("https://github.com/jbisbee1/DS1000_S2024/raw/main/data/sc_debt.Rds") 
+df<-read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds") 
 names(df)
 ```
 

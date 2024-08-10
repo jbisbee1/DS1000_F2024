@@ -32,8 +32,9 @@ output:
 ```
 
 ```{r,include=F}
+set.seed(123)
 options(width=60)
-knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5)
+knitr::opts_chunk$set(fig.align='center',fig.width=9,fig.height=5,message=F,warning=F)
 def.chunk.hook  <- knitr::knit_hooks$get("chunk")
 knitr::knit_hooks$set(chunk = function(x, options) {
   x <- def.chunk.hook(x, options)
@@ -450,7 +451,7 @@ df %>%
 
 ```{r, message=FALSE}
 library(tidyverse)
-dat <- read_csv('https://raw.githubusercontent.com/jbisbee1/DS1000_S2024/main/data/H097_members.csv')
+dat <- read_csv('https://raw.githubusercontent.com/jbisbee1/DS1000_F2024/main/data/H097_members.csv')
 glimpse(dat)
 ```
 
@@ -1110,7 +1111,7 @@ table(c1$cluster,c2$cluster)
 - Compare 97th Congress (1981-1983) to 117th Congress (2021-2023)
 
 ```{r,warning=F,message=F}
-dat <- read_csv('https://raw.githubusercontent.com/jbisbee1/DS1000_S2024/main/data/H117_members.csv')
+dat <- read_csv('https://raw.githubusercontent.com/jbisbee1/DS1000_F2024/main/data/H117_members.csv')
 datClust <- dat %>% 
   mutate(party = ifelse(party_code == 200,'R',
                         ifelse(party_code == 100,'D','I'))) %>%
@@ -1183,3 +1184,11 @@ ggplotly(ggClust,tooltip = 'text')
 --
 
 - Next lecture: clustering applied to **TEXT**
+
+--
+
+- Homework:
+
+  - Problem set 9
+  
+  - Homework 18

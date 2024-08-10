@@ -3,7 +3,7 @@ title: "Intro to Data Science"
 subtitle: "What R we doing?"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-01-16"
+date: "Due Date: 2024-08-27"
 output: html_document
 ---
 
@@ -59,7 +59,7 @@ You will then be asked to determine a bunch of settings for this `.Rmd` document
 
 <center><img src="../Lectures/figs/create_rmd_2.png" width = 70%></center>
 
-Copy the raw code from the [`ds1000_hw_1.Rmd`](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_1.Rmd) file by clicking on the copy button as shown in the image below.
+Copy the raw code from the [`ds1000_hw_1.Rmd`](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_1.Rmd) file by clicking on the copy button as shown in the image below.
 
 <center><img src="../Lectures/figs/copy_raw.png" width = 70%></center>
 
@@ -107,12 +107,12 @@ It's a good practice to shutdown R/Rstudio once you're no longer working on it, 
 
 ## Loading Datasets
 
-Now we're ready to load in data. The data frame will be our basic way of interacting with everything in this class. The `sc_debt.Rds` (found here: https://github.com/jbisbee1/DS1000_S2024/blob/main/data/sc_debt.Rds) data frame contains information from the college scorecard on different colleges and universities.
+Now we're ready to load in data. The data frame will be our basic way of interacting with everything in this class. The `sc_debt.Rds` (found here: https://github.com/jbisbee1/DS1000_F2024/blob/main/data/sc_debt.Rds) data frame contains information from the college scorecard on different colleges and universities.
 
 `tidyverse` includes a `read_rds()` function that can read data directly from the internet.
 
 ```{r}
-df <- read_rds('https://github.com/jbisbee1/DS1000_S2024/raw/main/data/sc_debt.Rds')
+df <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds')
 ```
 
 You'll notice that the code above starts with `df`. This is just an arbitrary name for an object. You could name it `dat` or `raw` or `debt` or whatever you want. Then there's an arrow `<-`. This is an assignment operator. Then there's a  function, `readRDS`, with parentheses, and an argument "sc_debt.Rds". Here's how to think about this.

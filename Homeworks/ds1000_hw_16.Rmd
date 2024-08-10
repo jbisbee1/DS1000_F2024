@@ -3,7 +3,7 @@ title: "College Admissions, Part 3"
 subtitle: "Homework"
 author: "Prof. Bisbee"
 institute: "Vanderbilt University"
-date: "Due Date: 2024-03-26"
+date: "Due Date: 2024-11-05"
 output: html_document
 ---
 
@@ -24,7 +24,7 @@ library(tidymodels)
 
 
 ```{r}
-ad<-read_rds("https://github.com/jbisbee1/DS1000_S2024/raw/main/data/admit_data.rds")
+ad<-read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/admit_data.rds")
 ```
 
 
