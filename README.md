@@ -1,4 +1,4 @@
-# DS 1000-01: How Data Shape Our World (Spring 2024)
+# DS 1000-01: How Data Shape Our World (Fall 2024)
 Course Material for DS1000: How Data Shape our World
 
 ## Table of Contents
@@ -29,7 +29,7 @@ This is the course management software used at Vanderbilt to support course lear
 Don’t forget to download the related app, which is called Pulse, to your phone and set it to alert you if there are new content or announcements for the course.
 
 ### Campuswire
-I have set up a Campuswire workspace for our use this semester to help us better communicate with each other and the TAs. You will need to create an account and join our workspace by following [this link](https://campuswire.com/c/G0D071C4A). You are encouraged to adopt these [Slack etiquette tips](https://slack.com/blog/collaboration/etiquette-tips-in-slack). 
+I have set up a Campuswire workspace for our use this semester to help us better communicate with each other and the TAs. You will need to create an account and join our workspace by following [this link](https://campuswire.com/p/GB59CA361). **The secret PIN can be found on the first announcement on Brightspace.** You are encouraged to adopt these [Slack etiquette tips](https://slack.com/blog/collaboration/etiquette-tips-in-slack). 
 
 Here is the list of channels you should see upon joining the Campuswire workspace:
 
@@ -46,7 +46,7 @@ Here is the list of channels you should see upon joining the Campuswire workspac
 - **Grades**: A space for grades (**NOT USED. VISIT BRIGHTSPACE INSTEAD.**)
 	
 ### GitHub
-I have created a [`GitHub`](https://github.com/jbisbee1/DS1000-S2024) repository to prepare and share all course-related content. This very syllabus is available as the repository's README and all links below are connected to the appropriate folders, sub-folders, and files in this repository. 
+I have created a [`GitHub`](https://github.com/jbisbee1/DS1000-F2024) repository to prepare and share all course-related content. This very syllabus is available as the repository's README and all links below are connected to the appropriate folders, sub-folders, and files in this repository. 
 
 You are expected to adopt the following workflow for this class:
 
@@ -62,17 +62,18 @@ You are expected to adopt the following workflow for this class:
 
 Given the nature of the material, as well as the size of the class, participation is not part of your grade. Instead, you will be assigned weekly problem sets beginning with Topic 3 which will test your ability to apply what you've learned in class, and to think creatively about your own data science ideas. These problem sets are assigned on the Monday of each week and are due by **11:59PM Nashville time the following Friday**. You are welcome to collaborate on these problem sets, and are encouraged to ask questions on the **Class feed** on `Campuswire`.
 
-There are also two exams. The first is a mid-term exam that is scheduled for March 7th (Thursday before spring break) and will take place in class. The preceding Tuesday (March 5th) will be an optional review session, where you should come prepared with questions. The second exam is a cumulative final that is scheduled for April 23rd.
+There are also two exams. The first is a mid-term exam that is scheduled for October 8th (Tuesday before fall break) and will take place in class. The second exam is a cumulative final that is scheduled for December 10th.
 
 The final grade is calculated as a weighted average of these components with the following weights:
 
-- **Problem sets:** 11 in total, only 10 of which are worth 4% of your final grade. I will automatically drop the lowest-scoring problem sets from your final grade. 
-- **Exams:** Midterm and final. The midterm is worth 20% and is in-class, and the final worth 25% of your final grade and is a take-home.
-- **Quizzes:** There are 19 quizzes over the course of the semester which can only be taken if you attend class. Each consist of several questions plus an attendance statement. 50% of the quiz grade comes from accurately answering all five questions, and 50% comes from signing the attendance statement. Each quiz is worth 1% of your final grade, and combined comprise the final 15%, meaning that 4 are not counted.
+- **Problem sets:** 9 in total, only 8 of which are worth 5 points each for a total of 40 points. This effectively means you can miss a problem set without it hurting your final grade.
+- **Exams:** Midterm and final. The midterm is worth 20 points and is in-class, and the final worth 25 points and is a take-home.
+- **Quizzes:** There are 19 quizzes over the course of the semester which can only be taken if you attend class. Each consist of several questions plus an attendance statement. 0.5 points comes from accurately answering all five questions, and 0.5 points comes from signing the attendance statement. Each quiz is worth 1 point of your final grade, and combined comprise the final 15 points, meaning that 4 are not counted toward your final grade.
+- **Extra Credit:** There is one extra credit point on each problem set, and five extra credit points on the midterm and final. Thus the maximum total points you can receive in this class is 128, meaning that if you ace every problem set, the midterm, and every quiz, you will have 98 points before the final exam. Achieving a perfect score requires a lot of effort, but would theoretically allow you to skip the final exam if you so chose.
 
 See the table below for a breakdown of the percentages, points, and extra credit. 
 
-![rubric](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/figs/rubric.png?raw=true)
+![rubric](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/figs/rubric.png?raw=true)
 	
 Letter grades are determined as per the standard Vanderbilt grading system, reproduced below:
 
@@ -127,7 +128,7 @@ As per Vanderbilt's [F22 Covid Plan](https://news.vanderbilt.edu/2022/08/11/ever
 
 As such, DS1000 will be meeting in-person. Lectures will not be hybrid or remote. For students affected by COVID-19, this means that you are responsible for obtaining any course material you missed. As you'll see below, I make all materials available on the course GitHub repository. In addition, I will be recording all lectures and posting these the evening following the lecture. **NB: this does not mean that students are permitted to skip the lectures.**
 
-I will be holding my office hours in-person in The Commons Center Room #353. The TAs are free to determine how best to hold their office hours, and their choices will be communicated to the students as soon as they are decided.
+I will be holding my office hours in-person in The Commons Center Room #348. The TAs are free to determine how best to hold their office hours, and their choices will be communicated to the students as soon as they are decided.
 
 ### If You Need Help
 
@@ -149,17 +150,17 @@ The observance of religious holidays (activities observed by a religious group o
 *[Back to ToC](#table-of-contents)*
 
 ## Office Hours
-* Prof. Bisbee: T & Th from 3PM-4PM in Commons #353
-* TA Brych: Tues from 10AM-12PM on Zoom
+* Prof. Bisbee: T & Th from 11AM-12PM in Commons #348
+* TA Brych: TBD
 * TA Fang: TBD
-* TA Gupta: Mon from 4PM-6PM on Zoom
-* TA Manda Li: Wed from 3PM-5PM on Zoom
+* TA Gupta: TBD
+* TA Manda Li: TBD
 * TA Qifan Lin: TBD
-* TA Quagliata: Mon from 1PM-3PM on Zoom
-* TA Sivakumar: Mon from 10AM-12PM on Zoom
-* TA Zha: Tues from 4PM-6PM on Zoom
+* TA Quagliata: TBD
+* TA Sivakumar: TBD
+* TA Zha: TBD
 
-All these can also be found on the [Campuswire calendar](https://campuswire.com/c/G07163719/feed), along with the Zoom links for those hosting their office hours remotely.
+All these can also be found on the [Campuswire calendar](https://campuswire.com/p/GB59CA361/feed), along with the Zoom links for those hosting their office hours remotely.
 
 *[Back to ToC](#table-of-contents)*
 
@@ -167,40 +168,39 @@ All these can also be found on the [Campuswire calendar](https://campuswire.com/
 
 | Date | Topic | Learning Goal | Materials | HW | Pset 
 | ---: | :--- | :--- | --- | --- | --- 
-01/09 | Introduction | Scientific method, camps of analysis | [Lecture 1](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_1_slides.html#1)<br/>[Notes 1](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_1_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3165543/View) | [HW 1](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_1.Rmd) | [PS 0](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_0.Rmd)
-01/11 | BREAK |  |  |  | 
-01/16 | Intro to R 1 | Objects, functions, and code | [Lecture 2](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_2_slides.html#1)<br/>[Notes 2](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_2_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3178609/View) | [HW 2](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_2.Rmd) | [PS 1](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_1.Rmd)<br/>[AK 1](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_1_AK.pdf)
-01/18 | Intro to R 2 | Visualization in R | [Lecture 3](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_3_slides.html#1)<br/>[Notes 3](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_3_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3181706/View) | [HW 3](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_3.Rmd) | 
-01/23 | Intro to R 3 | More visualization | [Lecture 4](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_4_slides.html#1)<br/>[Notes 4](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_4_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3186578/View) | [HW 4](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_4.Rmd) | [PS 2](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_2.Rmd)<br/>[AK 2](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_2_AK.pdf)
-01/25 | Review Session | Intro to R | [Notes R1](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_R1_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3189280/View) |  | 
-01/30 | Data Wrangling | Replicability and tabular data | [Lecture 5](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_5_slides.html#1)<br/>[Notes 5](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_5_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3193731/View) | [HW 5](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_5.Rmd) | [PS 3](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_3.Rmd)<br/>[AK 3](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_3_AK.pdf)
-02/01 | Univariate Analysis | Summaries of a single variable | [Lecture 6](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_6_slides.html#1)<br/>[Notes 6](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_6_notes.Rmd)<br/>[Recording]() | [HW 6](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_6.Rmd) | 
-02/06 | Multivariate 1 | Summaries of multiple variables | [Lecture 7](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_7_slides.html#1)<br/>[Notes 7](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_7_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3201165/View) | [HW 7](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_7.Rmd) | [PS 4](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_4.Rmd)<br/>[AK 4](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_4_AK.pdf)
-02/08 | Multivariate 2.a | Visualizations of multiple variables | [Lecture 8](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_8_slides.html#1)<br/>[Notes 8](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_8_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3204498/View) | [HW 8](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_8.Rmd) | 
-02/13 | Multivariate 2.b | Visualizations of multiple variables | [Lecture 9](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_9_slides.html#1)<br/>[Notes 9](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_9_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3207334/View) | [HW 9](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_9.Rmd) | [PS 5](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_5.Rmd)<br/>[AK 5](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_5_AK.pdf)
-02/15 | Review Session | Uni/Multivariate | [Notes R2](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_R2_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3209277/View) |  | 
-02/20 | Uncertainty 1 | Uncertainty and bootstrapping | [Lecture 10](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_10_slides.html#1)<br/>[Notes 10](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_10_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3213322/View) | [HW 10](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_10.Rmd) | [PS 6](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_6.Rmd)<br/>[AK 6](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_6_AK.pdf)
-02/22 | Uncertainty 2 | Confidence statements | [Lecture 11](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_11_slides.html#1)<br/>[Notes 11](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_11_notes.Rmd)<br/>[Recording]() | [HW 11](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_11.Rmd) | 
-02/27 | Regression 1 | The concept of a linear regression | [Lecture 12](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_12_slides.html#1)<br/>[Notes 12](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_12_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3219643/View) | [HW 12](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_12.Rmd) | [PS 7](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_7.Rmd)<br/>[AK 7](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_7_AK.pdf)
-02/29 | Regression 2 | Interpreting output and evaluating model | [Lecture 13](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_13_slides.html#1)<br/>[Notes 13](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_13_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3222069/View) | [HW 13](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_13.Rmd) | 
-03/05 | Regression 3 | Multiple regression, categorical Xs | [Lecture 14](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_14_slides.html#1)<br/>[Notes 14](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_14_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3225836/View) | [HW 14](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_14.Rmd) | 
-03/07 | Midterm Exam |  |  | [AK](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/DS1000_midterm_S2024_AK.pdf) | 
-03/12 | BREAK |  |  |  | 
-03/14 | BREAK |  |  |  | 
-03/19 | Classification 1 | The concept of a logistic regression | [Lecture 15](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_15_slides.html#1)<br/>[Notes 15](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_15_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3239279/View) | [HW 15](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_15.Rmd) | [PS 8](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_8.Rmd)<br/>[AK 8](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_8_AK.pdf)
-03/21 | Classification 2 | Interpreting output and evaluating model | [Lecture 16](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_16_slides.html#1)<br/>[Notes 16](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_16_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3241951/View) | [HW 16](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_16.Rmd) | 
-03/26 | Classification 3 | Using models for prediction | [Lecture 17](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_17_slides.html#1)<br/>[Notes 17](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_17_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3245064/View) | [HW 17](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_17.Rmd) | [PS 9](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_9.Rmd)<br/>[AK 9](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_9_AK.pdf)
-03/28 | Review Session | Classification | [Notes R3](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_R3_notes.Rmd)<br/>[Recording]() |  | 
-04/02 | Clustering | k-means clustering | [Lecture 18](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_18_slides.html#1)<br/>[Notes 18](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_18_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3251102/View) | [HW 18](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_18.Rmd) | [PS 10](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_10.Rmd)<br/>[AK 10](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_10_AK.pdf)
-04/04 | BREAK |  |  |  | 
-04/09 | NLP 1 | k-means clustering on text | [Lecture 19](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_19_slides.html#1)<br/>[Notes 19](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_19_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3257008/View) | [HW 19](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_19.Rmd) | [PS 11](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_11.Rmd)<br/>[AK 11](https://github.com/jbisbee1/DS1000_S2024/blob/main/Psets/ds1000_pset_11_AK.pdf)
-04/11 | NLP 2 | Sentiment analysis | [Lecture 20](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_20_slides.html#1)<br/>[Notes 20](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_20_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3259008/View) | [HW 20*](https://github.com/jbisbee1/DS1000_S2024/blob/main/Homeworks/ds1000_hw_20.Rmd)  | 
-04/16 | Review Session | Clustering | [Notes R4](https://github.com/jbisbee1/DS1000_S2024/blob/main/Lectures/ds1000_lecture_R4_notes.Rmd)<br/>[Recording](https://brightspace.vanderbilt.edu/d2l/le/content/480938/viewContent/3262316/View) |  | 
-04/18 | Ethics | The risks of rapid technological change | [Lecture 21](https://www.jamesbisbee.com/DS1000_S2024/Lectures/ds1000_lecture_21_slides.html#1)<br/>[Recording]() |  | 
-04/23 | Final Exam |  |  |  | 
-04/25 | Final Exam |  |  |  | 
+08/22 | Introduction | Scientific method, camps of analysis | [Lecture 1](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_1_slides.html#1)<br/>[Notes 1](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_1_notes.Rmd)<br/>[Recording]() | [HW 1](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_1.Rmd) | [PS 0](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_0.Rmd)
+08/27 | Intro to R 1 | Objects, functions, and code | [Lecture 2](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_2_slides.html#1)<br/>[Notes 2](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_2_notes.Rmd)<br/>[Recording]() | [HW 2](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_2.Rmd) | [PS 1](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_1.Rmd)<br/>[AK 1](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_1_AK.pdf)
+08/29 | Intro to R 2 | Visualization in R | [Lecture 3](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_3_slides.html#1)<br/>[Notes 3](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_3_notes.Rmd)<br/>[Recording]() | [HW 3](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_3.Rmd) | 
+09/03 | Intro to R 3 | More visualization | [Lecture 4](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_4_slides.html#1)<br/>[Notes 4](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_4_notes.Rmd)<br/>[Recording]() | [HW 4](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_4.Rmd) | [PS 2](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_2.Rmd)<br/>[AK 2](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_2_AK.pdf)
+09/05 | NO CLASS |  |  |  | 
+09/10 | Data Wrangling | Replicability and tabular data | [Lecture 5](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_5_slides.html#1)<br/>[Notes 5](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_5_notes.Rmd)<br/>[Recording]() | [HW 5](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_5.Rmd) | [PS 3](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_3.Rmd)<br/>[AK 3](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_3_AK.pdf)
+09/12 | Univariate Analysis | Summaries of a single variable | [Lecture 6](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_6_slides.html#1)<br/>[Notes 6](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_6_notes.Rmd)<br/>[Recording]() | [HW 6](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_6.Rmd) | 
+09/17 | Multivariate 1 | Summaries of multiple variables | [Lecture 7](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_7_slides.html#1)<br/>[Notes 7](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_7_notes.Rmd)<br/>[Recording]() | [HW 7](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_7.Rmd) | [PS 4](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_4.Rmd)<br/>[AK 4](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_4_AK.pdf)
+09/19 | Multivariate 2 | Visualizations of multiple variables | [Lecture 8](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_8_slides.html#1)<br/>[Notes 8](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_8_notes.Rmd)<br/>[Recording]() | [HW 8](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_8.Rmd) | 
+09/24 | Multivariate 3 | Visualizations of multiple variables | [Lecture 9](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_9_slides.html#1)<br/>[Notes 9](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_9_notes.Rmd)<br/>[Recording]() | [HW 9](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_9.Rmd) | [PS 5](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_5.Rmd)<br/>[AK 5](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_5_AK.pdf)
+09/26 | Review Session | Uni/Multivariate | [Lecture R1](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_R1_slides.html#1)<br/>[Notes R1](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_R1_notes.Rmd)<br/>[Recording]() |  | 
+10/01 | Uncertainty 1 | Uncertainty and bootstrapping | [Lecture 10](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_10_slides.html#1)<br/>[Notes 10](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_10_notes.Rmd)<br/>[Recording]() | [HW 10](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_10.Rmd) | [PS 6](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_6.Rmd)<br/>[AK 6](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_6_AK.pdf)
+10/03 | Uncertainty 2 | Confidence statements | [Lecture 11](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_11_slides.html#1)<br/>[Notes 11](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_11_notes.Rmd)<br/>[Recording]() | [HW 11](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_11.Rmd) | 
+10/08 | Midterm Exam |  |  |  | 
+10/10 | BREAK |  |  |  | 
+10/15 | Regression 1 | Interpreting output and evaluating model | [Lecture 12](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_12_slides.html#1)<br/>[Notes 12](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_12_notes.Rmd)<br/>[Recording]() | [HW 12](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_12.Rmd) | [PS 7](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_7.Rmd)<br/>[AK 7](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_7_AK.pdf)
+10/17 | Regression 2 | Interpreting output and evaluating model | [Lecture 13](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_13_slides.html#1)<br/>[Notes 13](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_13_notes.Rmd)<br/>[Recording]() | [HW 13](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_13.Rmd) | 
+10/22 | Regression 3 | Multiple regression, categorical Xs | [Lecture 14](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_14_slides.html#1)<br/>[Notes 14](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_14_notes.Rmd)<br/>[Recording]() | [HW 14](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_14.Rmd) | 
+10/24 | Review Session | Regression | [Lecture R2](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_R2_slides.html#1)<br/>[Notes R2](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_R2_notes.Rmd)<br/>[Recording]() |  | 
+10/29 | Classification 1 | The concept of a logistic regression | [Lecture 15](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_15_slides.html#1)<br/>[Notes 15](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_15_notes.Rmd)<br/>[Recording]() | [HW 15](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_15.Rmd) | [PS 8](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_8.Rmd)<br/>[AK 8](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_8_AK.pdf)
+10/31 | Classification 2 | Interpreting output and evaluating model | [Lecture 16](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_16_slides.html#1)<br/>[Notes 16](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_16_notes.Rmd)<br/>[Recording]() | [HW 16](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_16.Rmd) | 
+11/05 | Classification 3 | Interpreting output and evaluating model | [Lecture 17](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_17_slides.html#1)<br/>[Notes 17](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_17_notes.Rmd)<br/>[Recording]() | [HW 17](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_17.Rmd) | 
+11/07 | NO CLASS |  |  |  | 
+11/12 | Clustering | k-means clustering | [Lecture 18](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_18_slides.html#1)<br/>[Notes 18](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_18_notes.Rmd)<br/>[Recording]() | [HW 18](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_18.Rmd) | [PS 9](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_9.Rmd)<br/>[AK 9](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_9_AK.pdf)
+11/14 | NLP 1 | k-means clustering on text | [Lecture 19](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_19_slides.html#1)<br/>[Notes 19](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_19_notes.Rmd)<br/>[Recording]() | [HW 19](https://github.com/jbisbee1/DS1000_F2024/blob/main/Homeworks/ds1000_hw_19.Rmd) | 
+11/19 | NLP 2 | Sentiment analysis | [Lecture 20](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_20_slides.html#1)<br/>[Notes 20](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_20_notes.Rmd)<br/>[Recording]() |  | 
+11/21 | Review Session | Clustering | [Lecture R3](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_R3_slides.html#1)<br/>[Notes R3](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_R3_notes.Rmd)<br/>[Recording]() |  | 
+11/26 | BREAK |  |  |  | 
+11/28 | BREAK |  |  |  | 
+12/03 | Ethics | The risks of rapid technological change | [Lecture 21](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_21_slides.html#1)<br/>[Notes 21](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_21_notes.Rmd)<br/>[Recording]() |  | 
+12/05 | Review Session | Cumulative | [Lecture R4](https://www.jamesbisbee.com/DS1000_F2024/Lectures/ds1000_lecture_R4_slides.html#1)<br/>[Notes R4](https://github.com/jbisbee1/DS1000_F2024/blob/main/Lectures/ds1000_lecture_R4_notes.Rmd)<br/>[Recording]() |  | 
+12/10 | Final Exam |  |  |  | 
 
-* Final homework is optional.
 
 ## Helpful Resources
 
