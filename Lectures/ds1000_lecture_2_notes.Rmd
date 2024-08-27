@@ -1,0 +1,93 @@
+---
+title: "Lecture 2 Notes"
+output: html_document
+date: "2024-08-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# This is a new section
+
+## This is a smaller subsection
+
+### This is a subsubsection
+
+# Taking notes in RMarkdown
+
+- The professor is demonstrating how to take notes
+
+- He is typing too fast and making mistakes
+
+- Or not
+
+- This is **bold text**
+
+- This is *italicized text*
+
+- This is `code font`
+
+# Coding in R
+
+```{r}
+2+2
+```
+
+# Demonstrating the object assignment operator `<-`
+
+```{r}
+object1 <- 2+2
+```
+
+blah blah blah filler texdt blah blah blah
+
+```{r}
+object1*2
+```
+
+# More complicated objects
+```{r}
+some_text <- "This is a sentence."
+some_text <- 'This is a sentence.'
+
+
+a_vector_of_numbers <- c(15,20,-15,101,32)
+mean(a_vector_of_numbers)
+median(a_vector_of_numbers)
+
+rm(a_vector_of_numbers)
+
+# Changing variable to something else
+a_vector_of_numbers <- c(15,20,-15,101,32)
+a_vector_of_numbers <- c("This","is","a","vector","of","words.")
+a_mixture_vector <- c(125,"This",-1)
+
+mean <- "This is a bad idea."
+
+mean(c(15,315,3153,109531))
+
+aMixture <- c(125,"This",-1)
+```
+
+# Using Packages
+
+- Step 1: Install packages from the internet using `install.packages('tidyverse')`
+- Step 2: Activate package using `require(tidyverse)`
+
+```{r}
+require(tidyverse)
+df <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds")
+
+df
+```
+
+# Two new functions:
+
+- `filter()`
+- `select()`
+
+```{r}
+df %>% filter(instnm == "Vanderbilt University") %>% select(md_earn_wne_p6)
+```
+
