@@ -69,7 +69,7 @@ df <- read_rds(...) # Load the dataset
 *Which school has the highest future earnings and what is its admissions rate?*
 ```{r}
 df %>% 
-  arrange(...) %>% # Arrange by the admission rate
+  arrange(...) %>% # Arrange by the future earnings
   select(...) # Select the school name, the admission rate, and the state
 ```
 
