@@ -101,7 +101,7 @@ df %>%
 *Calculate the average SAT score and median earnings of recent graduates by region. Which region has the highest average SAT scores and which has the highest future earnings?*
 ```{r}
 df %>%
-  group_by(...) %>% # Calculate state-by-state with group_by()
+  group_by(...) %>% # Calculate region with group_by()
   summarise(..., # Summarise the average SAT
             ...) %>% # Summarise the average earnings
   arrange(...) # Arrange as needed to answer
