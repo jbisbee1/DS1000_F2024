@@ -1,0 +1,126 @@
+---
+title: "Lecture 3 Notes"
+output: html_document
+date: "2024-08-29"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Jump straight in to data analysis
+
+```{r}
+require(tidyverse)
+df <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds")
+
+df
+```
+
+# Filter to subset to rows
+
+```{r}
+df %>%
+  filter(instnm == "Vanderbilt Unviersity")
+
+df %>%
+  filter(str_detect(instnm,"erbilt"))
+
+df %>%
+  filter(grepl("erbilt",instnm)) %>%
+  select(grad_debt_mdn,sat_avg,md_earn_wne_p6)
+```
+
+# Comparing Vanderbilt to other schools
+
+- Starting with `sat_avg`
+
+```{r}
+df %>%
+  select(instnm,sat_avg,grad_debt_mdn,md_earn_wne_p6) %>% 
+  arrange(sat_avg)
+
+# Descending order
+df %>%
+  select(instnm,sat_avg,grad_debt_mdn,md_earn_wne_p6) %>% 
+  arrange(desc(sat_avg)) %>%
+  print(n = 20)
+
+df %>%
+  select(instnm,sat_avg,grad_debt_mdn,md_earn_wne_p6) %>% 
+  arrange(-sat_avg,instnm) %>%
+  print(n = 20)
+```
+
+# Looking at earnings
+
+```{r}
+df %>%
+  select(instnm,sat_avg,grad_debt_mdn,md_earn_wne_p6) %>% 
+  arrange(desc(md_earn_wne_p6)) %>%
+  print(n = 50)
+```
+
+# Introducing `mutate()`
+
+```{r}
+df %>%
+  select(instnm,md_earn_wne_p6) %>%
+  arrange(desc(md_earn_wne_p6)) %>%
+  mutate(earnings_rank = row_number()) %>%
+  filter(str_detect(instnm,"erbilt"))
+```
+
+# Good and bad examples
+
+```{r}
+# Good use of object assignment operator
+df <- df %>%
+  arrange(desc(md_earn_wne_p6)) %>%
+  mutate(earnings_index = row_number())
+
+# Bad use of object assignment operator
+df_subset <- df %>%
+  select(instnm,md_earn_wne_p6) %>%
+  filter(instnm == "Vanderbilt University") %>%
+  mutate(test = 1)
+
+df %>%
+  select(instnm,sat_avg)
+```
+
+# What is the relationship between admissions rate and SAT scores?
+
+- Introducing `summarise()`
+
+```{r}
+df %>%
+  summarise(avg_sat = mean(sat_avg,na.rm = TRUE))
+
+df %>%
+  filter(adm_rate < .1) %>%
+  summarise(avg_sat = mean(sat_avg,na.rm = TRUE))
+
+df %>%
+  filter(adm_rate > .1) %>%
+  summarise(avg_sat = mean(sat_avg,na.rm = TRUE))
+```
+
+# Creating new variable with `ifelse()`
+
+```{r}
+df <- df %>%
+  mutate(sel = ifelse(test = adm_rate < .1,
+                      yes = "Selective",
+                      no = "Not selective"))
+
+df %>%
+  select(instnm,adm_rate,sel)
+
+# Group by and summarise
+df %>%
+  group_by(sel) %>%
+  summarise(avg_sat = mean(sat_avg,na.rm=T))
+```
+
+
