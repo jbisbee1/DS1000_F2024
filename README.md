@@ -151,14 +151,7 @@ The observance of religious holidays (activities observed by a religious group o
 
 ## Office Hours
 * Prof. Bisbee: T & Th from 11AM-12PM in Commons #348
-* TA Brych: TBD
-* TA Fang: TBD
-* TA Gupta: TBD
-* TA Manda Li: TBD
-* TA Qifan Lin: TBD
-* TA Quagliata: TBD
-* TA Sivakumar: TBD
-* TA Zha: TBD
+* TA OH: please see Campuswire calendar
 
 All these can also be found on the [Campuswire calendar](https://campuswire.com/c/calendar), along with the Zoom links for those hosting their office hours remotely.
 
