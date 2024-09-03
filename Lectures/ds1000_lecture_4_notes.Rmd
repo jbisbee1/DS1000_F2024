@@ -1,0 +1,97 @@
+---
+title: "Lecture 4 Notes"
+output: html_document
+date: "2024-09-03"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+
+df <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds")
+```
+
+# Create a new variable for low / high SAT scores
+
+```{r}
+df <- df %>%
+  mutate(sat_high = ifelse(test = sat_avg > 1450,
+                           yes = "High SAT",
+                           no = "Low SAT"))
+```
+
+# Calculate average future earnings by SAT group
+
+```{r}
+df %>%
+  group_by(sat_high) %>%
+  summarise(avg_earn = mean(md_earn_wne_p6,na.rm=TRUE))
+
+# Other thresholds
+df <- df %>%
+  mutate(sat_high = ifelse(test = sat_avg > 1500,
+                           yes = "High SAT",
+                           no = "Low SAT"))
+
+df %>%
+  group_by(sat_high) %>%
+  summarise(avg_earn = mean(md_earn_wne_p6,na.rm=TRUE))
+```
+
+# Visualization in R
+
+```{r}
+df %>%
+  ggplot(aes(x = sat_avg,
+             y = md_earn_wne_p6)) +
+  geom_point(color = 'tomato',shape = 21,size = 3) + 
+  geom_smooth(method = 'lm') + 
+  labs(x = "Average SAT score of incoming students",
+       y = "Median Earnings of recent graduates",
+       title = 'Relationship between SAT scores and earnings',
+       subtitle = '2,546 US Schools and Universities in 2019')
+```
+
+# Introducing variable "types"
+
+```{r}
+df %>%
+  select(sat_avg,md_earn_wne_p6,region)
+
+# Try a dumb plot
+df %>%
+  ggplot(aes(x = region,
+             y = md_earn_wne_p6)) + 
+  geom_point()
+```
+
+# Introducing `geom_bar()`
+
+```{r}
+df %>%
+  group_by(region) %>%
+  summarise(avg_md_earn = mean(md_earn_wne_p6,na.rm=T)) %>%
+  ggplot(aes(y = reorder(region,-avg_md_earn),
+             x = avg_md_earn,
+             fill = region)) + 
+  geom_bar(stat = 'identity') + 
+  labs(y = "Region where school is located",
+       x = "Average of median future earnings",
+       title = "Descriptive plot of region and earnings",
+       subtitle = "2,546 schools from 2019 in the US") + 
+  geom_vline(xintercept = mean(df$md_earn_wne_p6,na.rm=T),
+             color = 'red',linetype = 'dashed')
+```
+
+# Select (tidyverse) versus $ (base R)
+
+```{r}
+df$control
+
+df %>%
+  select(control)
+```
+
