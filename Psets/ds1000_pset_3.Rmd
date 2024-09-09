@@ -1,0 +1,131 @@
+---
+title: "Problem Set 3"
+subtitle: "Data Wrangling"
+author: "[YOUR NAME]"
+institute: "Vanderbilt University"
+date: "Due Date: 2024-09-13"
+output:
+  html_document: default
+---
+
+```{r,include=F}
+knitr::opts_chunk$set(error=TRUE)
+```
+
+
+## Getting Set Up
+
+Open `RStudio` and create a new RMarkDown file (`.Rmd`) by going to `File -> New File -> R Markdown...`.
+Accept defaults and save this file as `[LAST NAME]_ps3.Rmd` to your `code` folder.
+
+Copy and paste the contents of this `.Rmd` file into your `[LAST NAME]_ps3.Rmd` file. Then change the `author: [Your Name]` to your name.
+
+We will be using the `MI2020_ExitPoll.Rds` file from the course [github page](https://github.com/jbisbee1/DS1000_F2024/blob/main/data/MI2020_ExitPoll.Rds).
+
+All of the following questions should be answered in this `.Rmd` file. There are code chunks with incomplete code that need to be filled in. 
+
+This problem set is worth 5 total points, plus 1 extra credit point. The point values for each question are indicated in brackets below. To receive full credit, you must have the correct code. In addition, some questions ask you to provide a written response in addition to the code.
+
+You are free to rely on whatever resources you need to complete this problem set, including lecture notes, lecture presentations, Google, your classmates...you name it. However, the final submission must be complete by you. There are no group assignments. To submit, compile (i.e., `knit`) the completed problem set and upload the PDF file to Brightspace on Friday by midnight. Instructions for how to compile the output as a PDF can be found in [Problem Set 0](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_0.pdf) and in this [gif tutorial](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/save_as_pdf.gif). 
+
+*Note that the TAs and professors will not respond to Campuswire posts after 5PM on Friday, so don't wait until the last minute to get started!*
+
+**Good luck!**
+
+*Copy the link to ChatGPT you used here: _________________
+
+
+
+## Question 0
+Require `tidyverse` and an additional package called `labelled` (remember to `install.packages("labelled")` if you don't have it yet) and load the `MI2020_ExitPoll.Rds` data to an object called `MI_raw`. (Tip: use the `read_rds()` function with the link to the raw data.)
+
+```{r}
+require()
+require()
+MI_raw <- read_rds('') 
+```
+
+
+## Question 1 [1 point]
+*What is the unit of analysis in this dataset? How many variables does it have? How many observations?*
+
+> Write answer here
+
+## Question 2 [1 point]
+*This has too much information that we don't care about. Create a new object called `MI_clean` that contains only the following variables:*
+
+* AGE10
+* SEX
+* PARTYID
+* EDUC18
+* PRMSI20
+* QLT20
+* LGBT
+* BRNAGAIN
+* LATINOS
+* QRACEAI
+* WEIGHT
+
+*and then list which of these variables contain missing data recorded as `NA`. How many respondents were not asked certain questions?*
+```{r}
+MI_clean <- MI_raw %>% 
+  select(...) # Select the requested variables
+
+summary(...) # Identify which have missing data recorded as NA
+```
+
+> Write answer here
+
+## Question 3 [1 point]
+*Are there* **unit non-response** *data in the `PRSMI20` variable? If so, how are they recorded? What about the `PARTYID` variable? How many people refused to answer both of these questions?*
+
+```{r}
+MI_clean %>%
+  count(...) # Tip: use count() function to look at your variables.
+```
+
+> Write answer here.
+
+## Question 4 [1 points]
+*Let's create a new variable called `preschoice` that converts `PRSMI20` to a character. To do this, install the `labelled` package if you haven't already, then use the `to_character()` function from the `labelled` package. Now `count()` the number of respondents who reported voting for each candidate. How many respondents voted for candidate Trump in 2020? How many respondents refused to tell us who they voted for?*
+```{r}
+MI_clean <- MI_clean %>%
+  mutate(preschoice = ...) # Convert to character
+
+MI_clean %>%
+  count(...)
+```
+
+> Write answer here
+
+
+## Question 5 [1 point]
+What proportion of women supported Trump?
+
+```{r}
+# Women Trump supporters
+MI_clean %>%
+  drop_na(...) %>% # Drop any missing values for preschoice
+  filter(...) %>% # Filter to only women
+  count(...) %>% # Count the number of women who supported each candidate
+  mutate(share = ...) # Calculate the proportion of women who supported Trump
+
+# Alternative approach
+MI_clean %>%
+  drop_na(...) %>% # Drop any missing values for preschoice
+  mutate(trumpSupp = ifelse(...)) %>% # Create "dummy" variable for whether the person voted for Trump or not that is either 1 (they voted for Trump) or 0
+  group_by(...) %>% # Group by gender
+  summarise(share = mean(trumpSupp)) # Calculate proportion who supported Trump
+```
+
+> Write answer here.
+
+
+## Extra Credit [1 point]
+*Among women, which age group sees the highest support for Trump? To answer, you will need to calculate the proportion of women who supported Trump by age-group to determine which age-group had the highest Trump support among women. You will need to clean the AGE10 variable before completing this problem, just like we did with the PRSMI20 variable. Call the new variable "Age". HINT: to make your life easier (and not write a 10-level nested ifelse() function), try asking ChatGPT for help with this prompt: "I have a labelled variable in R that I want to convert to text. How can I do this?"*
+
+```{r}
+# Insert code here.
+```
+
+> Write answer here
