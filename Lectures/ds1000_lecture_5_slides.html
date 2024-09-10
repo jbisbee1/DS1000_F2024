@@ -4,7 +4,7 @@
     <title>Data Wrangling in R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Prof. Bisbee" />
-    <script src="libs/header-attrs-2.22/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/lexis.css" type="text/css" />
     <link rel="stylesheet" href="css/lexis-fonts.css" type="text/css" />
@@ -26,7 +26,7 @@ class: center, middle, inverse, title-slide
 ### Vanderbilt University
 ]
 .date[
-### Slides Updated: 2024-08-10
+### Slides Updated: 2024-09-10
 ]
 
 ---
@@ -325,7 +325,7 @@ class: center, middle, inverse, title-slide
 - Open `RStudio` and `require(tidyverse)`
 
 
-```r
+``` r
 require(tidyverse)
 require(labelled)
 ```
@@ -335,7 +335,7 @@ require(labelled)
 - Load the data
 
 
-```r
+``` r
 MI_raw  &lt;- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/MI2020_ExitPoll.rds')
 ```
 
@@ -344,7 +344,7 @@ MI_raw  &lt;- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/M
 - And take a look
 
 
-```r
+``` r
 MI_raw
 ```
 
@@ -469,7 +469,7 @@ MI_raw
 # Step 1: Look at the data
 
 
-```r
+``` r
 glimpse(MI_raw)
 ```
 
@@ -587,7 +587,7 @@ glimpse(MI_raw)
 - To identify `NA`-style missingness, use `summary()`
 
 
-```r
+``` r
 summary(MI_raw %&gt;% select(LALVOTERID,SEX,AGE10,PARTYID,LGBT,QLT20))
 ```
 
@@ -617,7 +617,7 @@ summary(MI_raw %&gt;% select(LALVOTERID,SEX,AGE10,PARTYID,LGBT,QLT20))
 - To identify unit non-response, can use `count()`
 
 
-```r
+``` r
 MI_raw %&gt;%
   count(PARTYID)
 ```
@@ -644,7 +644,7 @@ MI_raw %&gt;%
 - To identify unit non-response, can use `count()`
 
 
-```r
+``` r
 MI_raw %&gt;%
   count(AGE10)
 ```
@@ -678,7 +678,7 @@ MI_raw %&gt;%
 - To identify unit non-response, can use `count()`
 
 
-```r
+``` r
 MI_raw %&gt;%
   count(LGBT)
 ```
@@ -727,7 +727,7 @@ MI_raw %&gt;%
 # `ggplot()` Intro
 
 
-```r
+``` r
 MI_raw %&gt;%
   ggplot(aes(x = AGE10)) + 
   geom_bar()
@@ -740,7 +740,7 @@ MI_raw %&gt;%
 # `ggplot()` Intro
 
 
-```r
+``` r
 MI_raw %&gt;%
   ggplot(aes(x = LGBT)) + 
   geom_bar()
@@ -753,7 +753,7 @@ MI_raw %&gt;%
 # `ggplot()` Intro
 
 
-```r
+``` r
 MI_raw %&gt;%
   ggplot(aes(x = PARTYID)) + 
   geom_bar()
@@ -782,7 +782,7 @@ MI_raw %&gt;%
 - Why wrangle data?
 
 
-```r
+``` r
 MI_raw %&gt;%
   summarise(avgAge = mean(AGE10,na.rm=T))
 ```
@@ -802,7 +802,7 @@ MI_raw %&gt;%
 - We over-estimate the average age category because `R` doesn't realize these are codes!
 
 
-```r
+``` r
 MI_raw %&gt;%
   count(AGE10)
 ```
@@ -872,7 +872,7 @@ MI_raw %&gt;%
 --
 
 
-```r
+``` r
 MI_raw %&gt;%
   mutate(AGE10_new = ifelse(AGE10 == 99,NA,AGE10)) %&gt;%
   select(AGE10,AGE10_new) %&gt;%
@@ -920,13 +920,13 @@ MI_raw %&gt;%
 --
 
 
-```r
+``` r
 MI_raw %&gt;% select(AGE10_new)
 ```
 
 ```
 ## Error in `select()`:
-## ! Can't subset columns that don't exist.
+## ! Can't select columns that don't exist.
 ## ✖ Column `AGE10_new` doesn't exist.
 ```
 
@@ -937,7 +937,7 @@ MI_raw %&gt;% select(AGE10_new)
 - Thus we need to use the **assignment operator** (`&lt;-`)
 
 
-```r
+``` r
 MI_final &lt;- MI_raw %&gt;%
   mutate(AGE10_new = ifelse(AGE10 == 99,NA,AGE10))
 
@@ -973,7 +973,7 @@ MI_final %&gt;%
 --
 
 
-```r
+``` r
 MI_final %&gt;%
   summarise(avgAge = mean(AGE10_new,na.rm=T))
 ```
@@ -1016,7 +1016,7 @@ MI_final %&gt;%
 --
 
 
-```r
+``` r
 haven::as_factor(MI_final$AGE10) %&gt;% head()
 ```
 
@@ -1045,7 +1045,7 @@ haven::as_factor(MI_final$AGE10) %&gt;% head()
 --
 
 
-```r
+``` r
 MI_final &lt;- MI_final %&gt;%
   mutate(AGE10_labs = as.character(haven::as_factor(AGE10)))
 ```
@@ -1059,7 +1059,7 @@ MI_final &lt;- MI_final %&gt;%
 # Step 2: Wrangle
 
 
-```r
+``` r
 MI_final %&gt;%
   ggplot(aes(x = AGE10_labs)) + 
   geom_bar(stat = 'count')
@@ -1078,7 +1078,7 @@ MI_final %&gt;%
 - Override: `stat = "identity"` forces to show a specific value set in `aes()`
 
 
-```r
+``` r
 MI_final %&gt;%
   count(AGE10_labs) %&gt;%
   ggplot(aes(x = AGE10_labs,y = n)) + 
@@ -1097,7 +1097,7 @@ MI_final %&gt;%
 --
 
 
-```r
+``` r
 MI_final &lt;- MI_final %&gt;%
   mutate(preschoice = as.character(haven::as_factor(PRSMI20)),
          Qlty = as.character(haven::as_factor(QLT20)),
@@ -1124,6 +1124,35 @@ MI_final %&gt;%
 ## # ℹ 1,221 more rows
 ```
 
+---
+
+# Newer alternatives
+
+- `labelled` package also has `to_character()` function
+
+
+``` r
+MI_final %&gt;%
+  mutate(AGE10_cat = labelled::to_character(AGE10)) %&gt;%
+  count(AGE10,AGE10_cat)
+```
+
+```
+## # A tibble: 11 × 3
+##    AGE10                     AGE10_cat                n
+##    &lt;dbl+lbl&gt;                 &lt;chr&gt;                &lt;int&gt;
+##  1  1 [18 and 24,]           18 and 24,              33
+##  2  2 [25 and 29,]           25 and 29,              28
+##  3  3 [30 and 34,]           30 and 34,              42
+##  4  4 [35 and 39,]           35 and 39,              46
+##  5  5 [40 and 44,]           40 and 44,              78
+##  6  6 [45 and 49,]           45 and 49,              83
+##  7  7 [50 and 59,]           50 and 59,             274
+##  8  8 [60 and 64,]           60 and 64,             143
+##  9  9 [65 and 74,]           65 and 74,             290
+## 10 10 [75 or over?]          75 or over?            199
+## 11 99 [[DON'T READ] Refused] [DON'T READ] Refused    15
+```
 
 
 ---
@@ -1133,7 +1162,7 @@ MI_final %&gt;%
 - .blue[Science] guides us toward which variables to focus on
 
 
-```r
+``` r
 names(MI_final)
 ```
 
@@ -1174,7 +1203,7 @@ names(MI_final)
 - Look at these first
 
 
-```r
+``` r
 MI_final %&gt;% select(preschoice,Qlty)
 ```
 
@@ -1203,7 +1232,7 @@ MI_final %&gt;% select(preschoice,Qlty)
 - We can get some preliminary descriptive info with `count()`
 
 
-```r
+``` r
 MI_final %&gt;%
   count(preschoice)
 ```
@@ -1227,7 +1256,7 @@ MI_final %&gt;%
 - We can get some preliminary descriptive info with `count()` (.blue[science!])
 
 
-```r
+``` r
 MI_final %&gt;%
   count(preschoice,SEX)
 ```
@@ -1257,7 +1286,7 @@ MI_final %&gt;%
 - But `count()` is less useful for continuous variables
 
 
-```r
+``` r
 MI_final %&gt;%
   count(WEIGHT)
 ```
@@ -1286,7 +1315,7 @@ MI_final %&gt;%
 - Use `summary()` instead
 
 
-```r
+``` r
 MI_final %&gt;%
   select(WEIGHT) %&gt;%
   summary(WEIGHT)
@@ -1309,7 +1338,7 @@ MI_final %&gt;%
 - Recall some of the other helpful functions in `tidyverse`
 
 
-```r
+``` r
 MI_final %&gt;%
   count(preschoice) %&gt;%
   arrange(desc(n))
@@ -1335,7 +1364,7 @@ MI_final %&gt;%
 - Let's look for missing data
 
 
-```r
+``` r
 MI_final %&gt;%
   count(Qlty)
 ```
@@ -1360,7 +1389,7 @@ MI_final %&gt;%
 - Drop rows where the respondent didn't answer the "quality" question
 
 
-```r
+``` r
 MI_final %&gt;%
   drop_na(Qlty) %&gt;%
   count(Qlty)
@@ -1392,7 +1421,7 @@ MI_final %&gt;%
   - Need to look at them first!
 
 
-```r
+``` r
 MI_final %&gt;%
   count(Qlty)
 ```
@@ -1416,7 +1445,7 @@ MI_final %&gt;%
 - Convert "unit non-response" codes to `NA`
 
 
-```r
+``` r
 MI_final &lt;- MI_final %&gt;%
   mutate(Qlty = ifelse(grepl("DON'T READ",Qlty),NA,Qlty))
 MI_final %&gt;%
@@ -1441,7 +1470,7 @@ MI_final %&gt;%
 - Drop rows where the respondent didn't answer the "quality" question
 
 
-```r
+``` r
 MI_final %&gt;%
   drop_na(Qlty) %&gt;%
   count(Qlty)
@@ -1464,7 +1493,7 @@ MI_final %&gt;%
 - This is equivalent to `filter(!is.na(Qlty))`
 
 
-```r
+``` r
 MI_final %&gt;%
   filter(!is.na(Qlty)) %&gt;%
   count(Qlty)
@@ -1491,7 +1520,7 @@ MI_final %&gt;%
 - Otherwise get "complete cases" (respondents with no missing data)
 
 
-```r
+``` r
 MI_final %&gt;%
   drop_na() %&gt;%
   count(QLT20)
@@ -1507,7 +1536,7 @@ MI_final %&gt;%
 - Same as
 
 
-```r
+``` r
 MI_final %&gt;%
   filter(complete.cases(.)) %&gt;%
   count(QLT20)
@@ -1527,7 +1556,7 @@ MI_final %&gt;%
 
 
 
-```r
+``` r
 MI_final &lt;- MI_final %&gt;%
   select(SEX,AGE10,PARTYID,
          WEIGHT,QRACEAI,EDUC18,LGBT,
@@ -1540,7 +1569,7 @@ MI_final &lt;- MI_final %&gt;%
 - This is our **wrangled** data
 
 
-```r
+``` r
 MI_final
 ```
 
@@ -1576,7 +1605,7 @@ MI_final
 - And now save both the raw data and our prepared data together
 
 
-```r
+``` r
 save(MI_raw,MI_final,file = '../data/MI_prepped.RData')
 ```
 
@@ -1589,7 +1618,7 @@ save(MI_raw,MI_final,file = '../data/MI_prepped.RData')
 - When we load it, we get access to all the objects we've created
 
 
-```r
+``` r
 rm(MI_raw,MI_final)
 
 load('../data/MI_prepped.RData')

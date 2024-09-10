@@ -859,6 +859,17 @@ MI_final %>%
   select(preschoice,Qlty,LGBT_lab)
 ```
 
+---
+
+# Newer alternatives
+
+- `labelled` package also has `to_character()` function
+
+```{r}
+MI_final %>%
+  mutate(AGE10_cat = labelled::to_character(AGE10)) %>%
+  count(AGE10,AGE10_cat)
+```
 
 
 ---
