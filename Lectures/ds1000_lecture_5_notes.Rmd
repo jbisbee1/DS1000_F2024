@@ -1,0 +1,89 @@
+---
+title: "Lecture 5 Notes"
+output: html_document
+date: "2024-09-10"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+object1 <- "The number 1"
+object2 <- data.frame(X = 1:6,
+                      Y = 10:15)
+
+rm(list = ls())
+```
+
+# Loading in the new data
+
+```{r}
+require(tidyverse)
+MI_raw <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/MI2020_ExitPoll.rds")
+```
+
+# Step 1: Look at the data
+
+```{r}
+require(labelled)
+summary(MI_raw %>%
+          select(AGE10,PRSMI20))
+
+# Method #2: glimpse()
+glimpse(MI_raw %>% select(AGE10,PRSMI20))
+
+# Method #3: count()
+MI_raw %>%
+  count(AGE10)
+
+# Pure missingness vs unit non-response
+colnames(MI_raw)
+MI_raw %>%
+  count(QLT20)
+```
+
+# Visualize the AGE10 variable
+
+```{r}
+MI_raw %>%
+  ggplot(aes(x = AGE10)) + 
+  geom_bar()
+```
+
+# Ugly! Convert unit non-response to NA
+
+```{r}
+# Cleaning converts to numeric
+MI_raw %>%
+  mutate(AGE10_clean = ifelse(test = AGE10 == 99,
+                              yes = NA,
+                              no = AGE10)) %>%
+  count(AGE10,AGE10_clean)
+
+# First, convert to character, then clean
+require(labelled)
+require(haven)
+
+MI_raw %>%
+  mutate(AGE10_text = to_character(AGE10)) %>%
+  mutate(AGE10_text = ifelse(test = str_detect(AGE10_text,"Refuse"),
+                             yes = NA,
+                             no = AGE10_text)) %>%
+  count(AGE10_text,AGE10)
+
+# Add the wrangled variable to the dataset
+MI_final <- MI_raw %>%
+  mutate(AGE10_text = to_character(AGE10)) %>%
+  mutate(AGE10_text = ifelse(test = str_detect(AGE10_text,"Refus"),
+                             yes = NA,
+                             no = AGE10_text))
+
+# Old janky way of converting labeled to character
+MI_raw %>%
+  mutate(AGE10_text = as.character(haven::as_factor(AGE10))) %>%
+  count(AGE10_text,AGE10)
+
+```
+
+
