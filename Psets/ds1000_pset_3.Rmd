@@ -58,7 +58,7 @@ MI_raw <- read_rds('')
 * SEX
 * PARTYID
 * EDUC18
-* PRMSI20
+* PRSMI20
 * QLT20
 * LGBT
 * BRNAGAIN
