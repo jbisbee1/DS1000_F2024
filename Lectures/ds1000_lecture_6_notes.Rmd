@@ -1,0 +1,130 @@
+---
+title: "Lecture 6 Notes"
+output: html_document
+date: "2024-09-12"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+nba <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/nba_players_2018.Rds")
+```
+
+# Starting to LOOK at the data
+
+```{r}
+summary(nba)
+
+glimpse(nba)
+```
+
+# Summary on a single variable
+
+```{r}
+summary(nba$fga)
+
+summary(nba$namePlayer)
+```
+
+# Let's look more closely with ggplot()
+
+```{r}
+nba %>%
+  ggplot(aes(x = fga)) + 
+  geom_histogram()
+
+nba %>%
+  ggplot(aes(x = fga)) + 
+  geom_density()
+
+# THIS CREATES AN ERROR
+# nba %>%
+#   ggplot(aes(x = namePlayer))+ 
+#   geom_histogram()
+```
+
+# What about categorical data? (i.e., text values)
+
+```{r}
+nba %>%
+  select(slugTeam)
+
+nba %>%
+  ggplot(aes(y = slugTeam)) + 
+  geom_bar()
+```
+
+# Looking at a new variable
+
+```{r}
+# points: pts
+nba %>%
+  select(pts)
+
+nba %>%
+  ggplot(aes(x = pts)) + 
+  geom_histogram() + 
+  labs(x = "Points scored in the 2018 Season",
+       y = "Number of players",
+       title = 'Distribution of points in the NBA',
+       subtitle = 'Players from the 2018 season') + 
+  geom_vline(xintercept = mean(nba$pts,na.rm=T),color = 'red',
+             linetype = 'dashed') + 
+  geom_vline(xintercept = median(nba$pts),
+             color = 'blue',linetype = 'dotted')
+
+summary(nba %>% select(pts))
+
+
+```
+
+# Player age
+
+```{r}
+# Step 1: look at the variable
+glimpse(nba %>% select(agePlayer))
+
+# Step 2: make a guess about variable type
+# Looks continuous / numeric
+
+# Step 3: Try visualizing based on type
+nba %>%
+  ggplot(aes(x = agePlayer)) + 
+  geom_histogram(binwidth = 1)
+
+nba %>%
+  ggplot(aes(x = agePlayer)) + 
+  geom_bar()
+```
+
+# Look at both variables in a research question
+
+```{r}
+# X
+plot_fga <- nba %>%
+  ggplot(aes(x = fga)) + 
+  geom_density() + 
+  labs(x = "Field goals attempted",
+       y = 'Density',
+       title = 'Field goals and points',
+       subtitle = '2018 NBA Season')
+
+# Y
+plot_pts <- nba %>%
+  ggplot(aes(x = pts)) + 
+  geom_density()  + 
+  labs(x = "Points scored",
+       y = 'Density')
+```
+
+# Introducing the patchwork package
+
+```{r}
+require(patchwork)
+plot_fga + plot_pts
+```
+
+
