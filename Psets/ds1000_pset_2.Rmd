@@ -125,7 +125,7 @@ df %>%
 ```
 
 
-## Extra Credit [2 points]
+## Extra Credit [1 points]
 *Write a short paragraph discussing your findings. What do you think is going on in these data?*
 
 >- Write answer here
