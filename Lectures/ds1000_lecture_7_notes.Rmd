@@ -1,0 +1,112 @@
+---
+title: "Untitled"
+output: html_document
+date: "2024-09-17"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+
+mi_ep <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/MI2020_ExitPoll_small.rds")
+```
+
+# Look at the data (always)
+
+```{r}
+glimpse(mi_ep)
+```
+
+# Research Question
+
+- Is there a gender gap in support for Trump versus Biden in 2020?
+
+```{r}
+mi_ep %>%
+  count(preschoice)
+
+mi_ep %>%
+  filter(preschoice == "Donald Trump, the Republican" | preschoice == 'Joe Biden, the Democrat') %>%
+  count(preschoice)
+
+# Option 2: helper functions
+MI_final_small <- mi_ep %>%
+  filter(str_detect(preschoice,"Trump|Biden"))
+
+MI_final_small %>%
+  count(preschoice)
+
+# Create "dummy" variable
+MI_final_small <- MI_final_small %>%
+  mutate(TrumpVoter = ifelse(test = str_detect(preschoice,"Trump"),
+                             yes = 1,
+                             no = 0)) # %>%
+  # count(TrumpVoter,preschoice)
+
+MI_final_small
+```
+
+# Proportion of people who voted for Trump in the OVERALL data
+
+```{r}
+MI_final_small %>%
+  summarise(proportion_Trump = mean(TrumpVoter,na.rm=T))
+```
+
+# Calculation condition mean of Trump support by gender
+
+```{r}
+MI_final_small %>%
+  group_by(SEX) %>%
+  summarise(pct_Trump = mean(TrumpVoter,na.rm=T))
+
+# Hard to interpret because SEX is still coded with numbers
+MI_final_small <- MI_final_small %>%
+  # mutate(gender = labelled::to_character(SEX)) %>%
+  mutate(gender = ifelse(test = SEX == 1,
+                         yes = 'Male',
+                         no = 'Female')) #%>%
+  #count(SEX,gender)
+
+MI_final_small %>%
+  group_by(gender) %>%
+  summarise(pct_Trump = mean(TrumpVoter,na.rm=T))
+
+# Alternative approach: counting
+MI_final_small %>%
+  count(preschoice,gender) %>%
+  group_by(gender) %>%
+  mutate(pctSupport = n / sum(n))
+```
+
+# Visualize the result
+
+```{r}
+toplot <- MI_final_small %>%
+  count(preschoice,gender) %>%
+  group_by(gender) %>%
+  mutate(pctSupport = n / sum(n))
+
+# Option 1: Color by preschoice
+toplot %>%
+  ggplot(aes(x = gender,
+             y = pctSupport,
+             fill = preschoice)) + 
+  geom_bar(stat = "identity",
+           position = "dodge") + 
+  scale_fill_manual(values = c("red","blue"))
+
+# Option 2: color by gender
+toplot %>%
+  ggplot(aes(x = preschoice,
+             y = pctSupport,
+             fill = gender)) + 
+  geom_bar(stat = "identity",
+           position = "dodge") + 
+  scale_fill_manual(values = c("red","blue"))
+
+```
+

@@ -1,0 +1,121 @@
+---
+title: "Problem Set 4"
+subtitle: "Data Wrangling"
+author: "[YOUR NAME]"
+institute: "Vanderbilt University"
+date: "Due Date: 2024-09-20"
+output:
+  html_document: default
+---
+
+```{r,include=F}
+knitr::opts_chunk$set(error=TRUE)
+```
+
+
+## Getting Set Up
+
+Open `RStudio` and create a new RMarkDown file (`.Rmd`) by going to `File -> New File -> R Markdown...`.
+Accept defaults and save this file as `[LAST NAME]_ps4.Rmd` to your `code` folder.
+
+Copy and paste the contents of this `.Rmd` file into your `[LAST NAME]_ps4.Rmd` file. Then change the `author: [Your Name]` to your name.
+
+We will be using the `nba_players_2018.Rds` file from the course [github page](https://github.com/jbisbee1/DS1000_F2024/blob/main/data/nba_players_2018.Rds).
+
+All of the following questions should be answered in this `.Rmd` file. There are code chunks with incomplete code that need to be filled in. To submit, compile (i.e., `knit`) the completed problem set and upload the PDF file to Brightspace on Friday by midnight. Instructions for how to compile the output as a PDF can be found in [Problem Set 0](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_0.pdf) and in this [gif tutorial](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/save_as_pdf.gif). 
+
+This problem set is worth 5 total points, plus 1 extra credit point. The point values for each question are indicated in brackets below. To receive full credit, you must have the correct code. In addition, some questions ask you to provide a written response in addition to the code.
+
+You will be deducted 1 point for each day late the problem set is submitted, and 1 point for failing to submit in the correct format.
+
+You are free to rely on whatever resources you need to complete this problem set, including lecture notes, lecture presentations, Google, your classmates...you name it. However, the final submission must be complete by you. There are no group assignments.
+
+*Note that the TAs and professors will not respond to Campuswire posts after 5PM on Friday, so don't wait until the last minute to get started!*
+
+**Good luck!**
+
+*Copy the link to ChatGPT you used here: _________________
+
+
+## Question 0
+*Require `tidyverse` and an additional package called `haven` (remember to `install.packages("haven")` if you don't have it yet), and then load the [`nba_players_2018.Rds`](https://github.com/jbisbee1/DS1000_F2024/blob/main/data/nba_players_2018.Rds?raw=true') data to an object called `nba`.*
+```{r}
+# INSERT CODE HERE
+```
+
+
+## Question 1 [1 point]
+*Plot the distribution of field goals attempted by all NBA players in the 2018-2019 season. Explain why you chose the visualization that you did. Then add a vertical line indicating the mean and median number of points in the data. Color the median line blue and the mean line red. Why is the median lower than the mean?*
+```{r}
+nba %>%
+  ggplot(...) + # Put the fga variable on the x-axis of a ggplot.
+   geom_...() + # Choose the appropriate geom function to visualize.
+  labs(...) + # Add labels
+      geom_vline(...) + # Median vertical line (blue)
+      geom_vline(...) # Mean vertical line (red)
+```
+
+> Write answer here.
+
+## Question 2 [1 point]
+*Now examine the `country` variable. Visualize this variable using the appropriate `geom_...`, and justify your reason for choosing it. Tweak the plot to put the country labels on the y-axis, ordered by frequency. Which country are most NBA players from? What is weird about your answer, and what might explain it? *
+
+```{r}
+nba %>%
+  count(...) %>% # count the number of players by country
+  ggplot(...) + # place the country on the y-axis, reordered by the number of players. Put the number of players on the x-axis
+  geom_...(...) + # Choose the best geom
+  labs(...) # Add labels
+```
+
+> Write answer here
+
+## Question 3 [1 point]
+*Let's pretend we are consulting for an NBA organization. The owner and GM tell us they are interested in the relationship between the player's age (`agePlayer`) and the amount of points they score (`pts`). Please answer the following research question and provide a theory supporting your answer: "Do older NBA players score more points than younger players?"*
+
+> Write answer here
+
+## Question 4 [1 point]
+*Based on your answer above, what is the outcome / dependent / $Y$ variable and what is the explanatory / independent / $X$ variable? Why?*
+
+> Write answer here
+
+*Create a univariate visualization of both the $X$ and $Y$ variables. Choose the best `geom_...()` based on the variable type, and make sure to label your plots!*
+
+```{r}
+# X variable
+nba %>%
+  ggplot(...) + # Put the X variable on the x-axis
+  geom_...() +  # Choose the best geom given the variable type (make sure to look at it if you aren't sure)
+  labs(...)     # Add labels
+
+# Y variable
+nba %>%
+  ggplot(...) + # Put the Y variable on the x-axis
+  geom_...() +  # Choose the best geom given the variable type (make sure to look at it if you aren't sure)
+  labs(...)     # Add labels
+```
+
+## Question 5 [1 point]
+*Now analyze the data by creating a multivariate visualization that shows the relationship between age and points. Add a STRAIGHT line of best fit with `geom_smooth()`.*
+
+```{r}
+nba %>%
+  ggplot(...) + # Put the X variable on the x-axis, and the Y variable on the y-axis
+  geom_...() +  # Choose the best geom given both variable types
+  geom_smooth(...) + # Add a STRAIGHT line of best fit
+  labs(...)     # Add labels
+```
+
+*Based on your analysis, does the data support or reject your hypothesis from Question 3?*
+
+> Write answer here
+
+## Extra Credit [1 point]
+*Let's look for evidence of a "curvelinear" relationship between player age and points scored. To do so, first calculate the average points scored by age. Then plot this relationship using a multivariate visualization. Add a line of best fit with `geom_smooth()` but DON'T use `method = "lm"`. What do you conclude? Why?*
+
+```{r}
+# INSERT CODE HERE
+```
+
+> Write answer here
