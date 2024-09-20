@@ -1,0 +1,133 @@
+---
+title: "Lecture 8 Notes"
+output: html_document
+date: "2024-09-19"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+poll <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Pres2020_PV.Rds')
+
+# Quick wrangling
+
+poll <- poll %>%
+  mutate(Trump = Trump/100,
+         Biden = Biden/100,
+         margin = Biden - Trump)
+```
+
+# Look at the X and Y variables first
+
+```{r}
+# X variable: mode
+poll %>%
+  count(Mode)
+
+# Visualize the mode of contact
+poll %>%
+  filter(Mode == "IVR/Online" | Mode == "Live phone - RDD") %>%
+  ggplot(aes(x = Mode)) + 
+  geom_bar()
+
+# Look at the Y variable: margin
+glimpse(poll %>% select(margin))
+
+poll %>%
+  ggplot(aes(x = margin)) + 
+  geom_histogram(bins = 20)
+
+poll %>%
+  ggplot(aes(x = margin)) + 
+  geom_density()
+```
+
+
+# Multivariate visualization
+
+```{r}
+poll %>%
+  filter(Mode == "IVR/Online" | Mode == "Live phone - RDD") %>%
+  ggplot(aes(x = margin,fill = Mode)) + 
+  geom_histogram(position = 'dodge')
+
+# Try density instead
+poll %>%
+  filter(Mode == "IVR/Online" | Mode == "Live phone - RDD") %>%
+  ggplot(aes(x = margin,fill = Mode)) + 
+  geom_density(alpha = .4)
+```
+
+# Categorical-by-continuous
+
+```{r}
+mode_counts <- poll %>%
+  count(Mode)
+
+mode_counts <- mode_counts %>%
+  filter(n > 10)
+
+poll %>%
+  filter(Mode %in% mode_counts$Mode) %>%
+  ggplot(aes(x = margin,fill = Mode)) + 
+  geom_density(alpha = .3)
+
+# Introducing geom_boxplot() and geom_violin()
+poll %>%
+  filter(Mode %in% mode_counts$Mode) %>%
+  ggplot(aes(x = margin,y = reorder(Mode,margin))) + 
+  geom_boxplot()
+
+poll %>%
+  filter(Mode %in% mode_counts$Mode) %>%
+  ggplot(aes(x = margin,y = reorder(Mode,margin))) + 
+  geom_violin() + 
+  labs(x = "Margin (Biden - Trump)",
+       y = "Mode of contact",
+       title = "Anti-Trump Bias by Mode",
+       subtitle = "525 national polls from 2020")
+```
+
+# Research Question: Anti-Trump Bias
+
+```{r}
+poll %>%
+  ggplot(aes(x = Trump,y = Biden)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm')
+
+# Method 1: change the opacity
+poll %>%
+  ggplot(aes(x = Trump,y = Biden)) + 
+  geom_point(alpha = .3,size = 3) + 
+  geom_smooth(method = 'lm')
+
+# Method 2: "jitter"
+poll %>%
+  ggplot(aes(x = Trump,y = Biden)) + 
+  geom_jitter() + 
+  geom_smooth(method = 'lm')
+
+# Method 3: Size points by number of polls
+poll %>%
+  count(Trump,Biden) %>%
+  ggplot(aes(x = Trump,y = Biden,size = n)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm')
+
+poll %>%
+  group_by(Biden,Trump)
+
+poll %>%
+  count(Biden,Trump)
+
+
+# Quiz code: 8167
+```
+
+
+
+
