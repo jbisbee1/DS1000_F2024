@@ -1,0 +1,155 @@
+---
+title: "Problem Set 3"
+subtitle: "Data Wrangling"
+author: "[YOUR NAME]"
+institute: "Vanderbilt University"
+date: "Due Date: 2024-09-13"
+output:
+  html_document: default
+---
+
+```{r,include=F}
+knitr::opts_chunk$set(error=TRUE)
+```
+
+
+## Getting Set Up
+
+Open `RStudio` and create a new RMarkDown file (`.Rmd`) by going to `File -> New File -> R Markdown...`.
+Accept defaults and save this file as `[LAST NAME]_ps3.Rmd` to your `code` folder.
+
+Copy and paste the contents of this `.Rmd` file into your `[LAST NAME]_ps3.Rmd` file. Then change the `author: [Your Name]` to your name.
+
+We will be using the `MI2020_ExitPoll.Rds` file from the course [github page](https://github.com/jbisbee1/DS1000_F2024/blob/main/data/MI2020_ExitPoll.Rds).
+
+All of the following questions should be answered in this `.Rmd` file. There are code chunks with incomplete code that need to be filled in. 
+
+This problem set is worth 5 total points, plus 1 extra credit point. The point values for each question are indicated in brackets below. To receive full credit, you must have the correct code. In addition, some questions ask you to provide a written response in addition to the code.
+
+You are free to rely on whatever resources you need to complete this problem set, including lecture notes, lecture presentations, Google, your classmates...you name it. However, the final submission must be complete by you. There are no group assignments. To submit, compiled the completed problem set and upload the PDF file to Brightspace on Friday by midnight. Instructions for how to compile the output as a PDF can be found in [Problem Set 0](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_0.pdf) and in this [gif tutorial](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/save_as_pdf.gif). 
+
+*Note that the TAs and professors will not respond to Campuswire posts after 5PM on Friday, so don't wait until the last minute to get started!*
+
+**Good luck!**
+
+*Copy the link to ChatGPT you used here: _________________
+
+
+
+## Question 0
+Require `tidyverse` and an additional package called `labelled` (remember to `install.packages("labelled")` if you don't have it yet) and load the `MI2020_ExitPoll.Rds` data to an object called `MI_raw`. (Tip: use the `read_rds()` function with the link to the raw data.)
+
+```{r}
+require(tidyverse)
+require(labelled)
+MI_raw <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/MI2020_ExitPoll.rds') 
+```
+
+
+## Question 1 [1 point]
+*What is the unit of analysis in this dataset? How many variables does it have? How many observations?*
+
+> The unit of analysis is a person. There are 63 variables and 1,231 observations. [Rubric: 0 points if not attempted. 0.5 points if the unit of analysis is not an individual person responding to a survey (although fine if it is a voter, a person in Michigan, etc.). 0.75 points if the number of variables is wrong or the number of observations is wrong.]
+
+## Question 2 [1 point]
+*This has too much information that we don't care about. Create a new object called `MI_clean` that contains only the following variables:*
+
+* AGE10
+* SEX
+* PARTYID
+* EDUC18
+* PRMSI20
+* QLT20
+* LGBT
+* BRNAGAIN
+* LATINOS
+* QRACEAI
+* WEIGHT
+
+*and then list which of these variables contain missing data recorded as `NA`. How many respondents were not asked certain questions?*
+```{r}
+MI_clean <- MI_raw %>% 
+  select(AGE10,SEX,PARTYID,EDUC18,PRSMI20,QLT20,LGBT,BRNAGAIN,LATINOS,QRACEAI,WEIGHT) # Select the requested variables
+
+summary(MI_clean) # Identify which have missing data recorded as NA
+```
+
+> `QLT20`, `LGBT`, and `BRNAGAIN` have missing values stored as `NA`. 616 respondents were not asked `QLT20`, and 615 were not asked either `LGBT` or `BRNAGAIN`. [Rubric: 0 points if not attempted. 0.5 points if the student failed to use the object assignment operator (`<-`). 0.5 points if the incorrect variables were identified for missingness. 0.75 points if the wrong numbers were given for missingness.]
+
+## Question 3 [1 point]
+*Are there* **unit non-response** *data in the `PRSMI20` variable? If so, how are they recorded? What about the `PARTYID` variable? How many people refused to answer both of these questions?*
+
+```{r}
+MI_clean %>%
+  count(PRSMI20)
+
+MI_clean %>%
+  count(PARTYID)
+
+MI_clean %>%
+  count(PRSMI20,PARTYID) %>%
+  filter(PRSMI20 == 8 & PARTYID == 9)
+```
+
+> The unit non-response data in the `PRSMI20` variable is recorded with the number `8`. Missing data in the `PARTYID` variable is recorded with the number `9`. Only one person refused to give answers to both questions. [Rubric: 0 points for no attmept. 0.5 points for incorrect answer to how many people refused to answer both questions. 0.75 points if unit non-response code is incorrect for `PRSMI20`. (Some students might also indicate codes `0`, `7`, or `9`, but only `8` is correct.)]
+
+## Question 4 [1 points]
+*Let's create a new variable called `preschoice` that converts `PRSMI20` to a character. To do this, install the `labelled` package if you haven't already, then use the `to_character()` function from the `labelled` package. Now `count()` the number of respondents who reported voting for each candidate. How many respondents voted for candidate Trump in 2020? How many respondents refused to tell us who they voted for?*
+```{r}
+require(labelled)
+MI_clean <- MI_clean %>%
+  mutate(preschoice = to_character(PRSMI20))
+
+MI_clean %>%
+  count(preschoice)
+```
+
+> 459 respondents voted for candidate Trump in 2020. 14 people refused to give an answer. [Rubric: 0 points if no attempt. 0.5 points if correct written answer but code produces error. 0.5 points if correct code but no / wrong answer.]
+
+
+## Question 5 [1 point]
+What proportion of women supported Trump?
+
+```{r}
+# Women Trump supporters
+MI_clean %>%
+  drop_na(preschoice) %>%
+  filter(SEX == 2) %>%
+  count(preschoice) %>%
+  mutate(share = n / sum(n))
+
+# Alternative approach
+MI_clean %>%
+  drop_na(SEX,preschoice) %>%
+  mutate(trumpSupp = grepl('Trump',preschoice)) %>%
+  group_by(SEX) %>%
+  summarise(share = mean(trumpSupp))
+```
+
+> 32.9% of women supported Trump. [Rubric: 0 points if no attempt. 0.5 points if correct written answer but code produces error. 0.5 points if correct code but no / wrong answer. (Note that there are multiple ways to calculate this answer.)]
+
+
+## Extra Credit [1 point]
+*Among women, which age group sees the highest support for Trump? To answer, you will need to calculate the proportion of women who supported Trump by age-group to determine which age-group had the highest Trump support among women. You will need to clean the AGE10 variable before completing this problem, just like we did with the PRSMI20 variable. Call the new variable "Age". HINT: to make your life easier (and not write a 10-level nested ifelse() function), try asking ChatGPT for help with this prompt: "I have a labelled variable in R that I want to convert to text. How can I do this?"*
+
+```{r}
+MI_clean %>%
+  count(AGE10)
+
+require(labelled)
+MI_clean <- MI_clean %>%
+  mutate(Age = as.character(to_factor(AGE10)))
+
+MI_clean %>%
+  count(AGE10,Age)
+
+MI_clean %>%
+  count(Age,SEX,preschoice) %>%
+  group_by(Age,SEX) %>%
+  mutate(proportion = prop.table(n)) %>%
+  filter(SEX == 2,
+         grepl('Trump',preschoice)) %>%
+  arrange(desc(proportion))
+```
+
+> Among women, the age group with the greatest support for Trump is between 40 and 44 years old, followed by 45 and 49 year olds. We also see that women who refused to give their age actually had the highest support for Trump (57%). [Rubric: 0 points for no attempt. 0.5 points for preparing the cleaned version of `Age` but failed attempt to calculate proportions by age. 0.75 points for calculating proportions in the wrong way (i.e., % of Trump supporters who are women, by age). Full credit if they decided to answer that the group of women who refused their give their age had the highest support.]

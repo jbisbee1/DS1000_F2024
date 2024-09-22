@@ -1,0 +1,188 @@
+---
+title: "Problem Set 5"
+subtitle: "Multivariate Visualization"
+author: "[YOUR NAME]"
+institute: "Vanderbilt University"
+date: "Due Date: 2024-09-27"
+output:
+  html_document: default
+---
+
+```{r,include=F}
+knitr::opts_chunk$set(error=TRUE)
+```
+
+
+## Getting Set Up
+
+Open `RStudio` and create a new RMarkDown file (`.Rmd`) by going to `File -> New File -> R Markdown...`.
+Accept defaults and save this file as `[LAST NAME]_ps5.Rmd` to your `code` folder.
+
+Copy and paste the contents of this `.Rmd` file into your `[LAST NAME]_ps5.Rmd` file. Then change the `author: [Your Name]` to your name.
+
+We will be using two datasets this week. The first is the `Pres2020_PV.Rds` file from the course [github page](https://github.com/jbisbee1/DS1000_S2024/blob/main/data/Pres2020_PV.Rds) and should be saved to an object called `pres`. The second is the `Pres2020_StatePolls.Rds` file from the course [github page](https://github.com/jbisbee1/DS1000_S2024/blob/main/data/Pres2020_StatePolls.Rds) and should be saved to an object called `state`.
+
+All of the following questions should be answered in this `.Rmd` file. There are code chunks with incomplete code that need to be filled in. To submit, compile (i.e., `knit`) the completed problem set and upload the PDF file to Brightspace on Friday by midnight. Instructions for how to compile the output as a PDF can be found in [Problem Set 0](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/ds1000_pset_0.pdf) and in this [gif tutorial](https://github.com/jbisbee1/DS1000_F2024/blob/main/Psets/save_as_pdf.gif). 
+
+This problem set is worth 5 total points, plus 1 extra credit point. The point values for each question are indicated in brackets below. To receive full credit, you must have the correct code. In addition, some questions ask you to provide a written response in addition to the code.
+
+You will be deducted 1 point for each day late the problem set is submitted, and 1 point for failing to submit in the correct format.
+
+You are free to rely on whatever resources you need to complete this problem set, including lecture notes, lecture presentations, Google, your classmates...you name it. However, the final submission must be complete by you. There are no group assignments.
+
+*Note that the TAs and professors will not respond to Campuswire posts after 5PM on Friday, so don't wait until the last minute to get started!*
+
+**Good luck!**
+
+*Copy the link to ChatGPT you used here: _________________
+
+
+## Question 0
+*Require `tidyverse` and load the `Pres2020_PV.Rds` data to an object called `pres`.*
+
+```{r}
+require(tidyverse)
+pres <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Pres2020_PV.Rds")
+```
+
+## Question 1 [1 point]
+*Consider the following hypothesis: "Most Americans don't pay very much attention to politics, and don't know who they will vote for until very close to the election. Therefore polling predictions should be more accurate closer to the election." Based on this hypothesis and theoretical intuition, which variable is the $X$ variable and which is the $Y$ variable(s)?*
+
+>- Write answer here
+
+*Now let's first look at each variable by itself using univariate visualization. First, plot the total number of polls per start date in the data. NB: you will have convert `StartDate` to a `date` class with `as.Date()`. If you need help, see [this post](https://www.r-bloggers.com/2013/08/date-formats-in-r/). Do you observe a pattern in the number of polls over time? Why do you think this is?*
+```{r}
+pres %>%
+  mutate(StartDate = as.Date(StartDate,'%m/%d/%Y')) %>% # Convert to date
+  ggplot(aes(x = StartDate)) + # Visualize the variable using univariate principles
+  geom_...(...) + # Choose the correct `geom`
+  labs(...) # Make sure it is clearly labeled
+```
+
+>- Write answer here
+
+
+## Question 2 [1 point]
+*Next, let's look at the other variables. Calculate the* **prediction error** *for Biden (call this variable `demErr`) and Trump (call this variable `repErr`) such that positive values mean that the poll* **overestimated** *the candidate's popular vote share (`DemCertVote` for Biden and `RepCertVote` for Trump).*
+
+```{r}
+pres <- pres %>%
+  mutate(...) # Create the two new variables 
+```
+
+
+*Plot the Biden and Trump prediction errors on a single plot using `geom_bar()`, with red indicating Trump and blue indicating Biden (make sure to set alpha to some value less than 1 to increase the transparency!). Add vertical lines for the average prediction error for both candidates (colored appropriately) as well as a vertical line indicating no prediction error.*
+
+
+```{r}
+pres %>%
+  ggplot() + # Instantiate an EMPTY ggplot object
+  geom_bar(aes(...), # Put the first variable in the first `geom_bar()`
+           ...) + # Set the color and opacity
+  geom_bar(aes(...), # Put the second variable in the second `geom_bar()`
+           ...) + # Set the color and opacity
+  labs(...) + # Make sure it is clearly labeled
+  geom_vline(...) + # Put a black vertical line at 0
+  geom_vline() + # Put a dashed blue vertical line at the Democrat prediction error
+  geom_vline() + # Put a dashed red vertical line at the Republican prediction error
+```
+
+*Do you observe a systematic bias toward one candidate or the other?*
+
+>- Write answer here
+
+## Question 3 [1 point]
+*Plot the average prediction error for Trump (red) and Biden (blue) by start date using `geom_point()` and add two curvey lines of best fit using `geom_smooth()`. Make sure that the curvey line for Trump is also red, and the curvey line for Biden is also blue!*
+
+
+```{r}
+pres %>%
+  mutate(...) %>% # Convert to date
+  group_by(...) %>% # Calculate the average error for Biden and Trump by date
+  summarise(...,
+            ...) %>%
+  ggplot() + # Instantiate an empty ggplot
+  geom_point(aes(x = ...,y = ...), # Put the first variable in the first `geom_point()`
+           ...) + # Set the color
+  geom_point(aes(x = ...,y = ...), # Put the second variable in the second `geom_point()`
+           ...) + # Set the color
+  geom_smooth(aes(x = ...,y = ...), # Put the first variable in the first geom_smooth()
+              ...) + # Set the color
+  geom_smooth(aes(x = ...,y = ...), # Put the second variable in the second geom_smooth()
+              ...) + # Set the color
+  labs(...) + # Make sure it is clearly labeled
+  geom_hline(...) # Add a horizontal dashed line at 0
+```
+
+*What pattern do you observe over time, if any? Does this support the hypothesis presented in Question 1 above?*
+
+>- Write answer here
+
+## Question 4 [1 point]
+*Can we do better by aggregating state-level polls? Load the [Pres2020_StatePolls.Rds] to an object called `state`. First, create two new variables `demErr` and `repErr` just as you did in Question 2. Then recreate the same overtime plot comparing Biden and Trump prediction errors as you did in Question 3. What do you observe?*
+
+```{r}
+state <- read_rds(...) # Read in the data
+
+state <- state %>%
+  mutate(...) # Create the two new variables for Democrat and Republican prediction errors
+
+pres %>%
+  mutate(...) %>% # Convert to date
+  group_by(...) %>% # Calculate the average error for Biden and Trump by date
+  summarise(...,
+            ...) %>%
+  ggplot() + # Instantiate an empty ggplot
+  geom_point(aes(x = ...,y = ...), # Put the first variable in the first `geom_point()`
+           ...) + # Set the color
+  geom_point(aes(x = ...,y = ...), # Put the second variable in the second `geom_point()`
+           ...) + # Set the color
+  geom_smooth(aes(x = ...,y = ...), # Put the first variable in the first geom_smooth()
+              ...) + # Set the color
+  geom_smooth(aes(x = ...,y = ...), # Put the second variable in the second geom_smooth()
+              ...) + # Set the color
+  labs(...) + # Make sure it is clearly labeled
+  geom_hline(...) # Add a horizontal dashed line at 0
+```
+
+>- Write answer here
+
+## Question 5 [1 point]
+*One other explanation for inaccurate state polls is that some states do not have many polls run. Calculate the anti-Trump/pro-Biden bias for each state by subtracting the `repErr` from the `demErr` (call this new variable `bidenBias`). Then calculate the average bias by state AND calculate the number of polls in that state. Finally, plot the relationship between the number of polls and the extent of bias. Does the data support the theory that states with more polls were predicted more accurately?*
+
+```{r}
+state <- state %>%
+  mutate(...) # Create the bidenBias variable here
+
+
+state %>%
+  group_by(...) %>%
+  summarise(...,   # Calculate the average bidenBias by state
+            ...) %>% # Calculate the number of polls by state
+  ungroup() %>%
+  ggplot(aes(x = ...,      # Put the correct variable on the x-axis
+             y = ...)) +   # Put the correct variable on the y-axis
+  geom_...() + # Choose the correct geom
+  geom_...(...) + # Add a straight line of best fit
+  labs(...) # Give it some good labels
+```
+
+>- Write answer here
+
+## Extra Credit [1 point]
+*Do polls that underestimate Trump's support overestimate Biden's support? Investigate this question using both the national data (`pres`) and the state data (`state`). Use a scatterplot to test, combined with a (straight) line of best fit. Then, calculate the proportion of polls that (1) underestimate both Trump and Biden, (2) underestimate Trump and overestimate Biden, (3) overestimate Trump and underestimate Biden, (4) overestimate both candidates. In these analyses, define "overestimate" as prediction errors greater than or equal to zero, whereas "underestimate" should be prediction errors less than zero. What do you conclude? Is there any evidence of an anti-Trump bias in national polling? What about state polling?*
+```{r}
+# National scatterplot
+# INSERT CODE HERE
+
+# National proportions: 4 different types of polls
+# INSERT CODE HERE
+
+# State scatterplot
+# INSERT CODE HERE
+
+# State proportions: 4 different types of polls
+# INSERT CODE HERE
+```
+
+>- Write answer here
