@@ -1,0 +1,138 @@
+---
+title: "Lecture 9 Notes"
+output: html_document
+date: "2024-09-24"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+poll <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Pres2020_PV.Rds')
+poll <- poll %>%
+  mutate(Trump = Trump/100,
+         Biden = Biden/100,
+         margin = Biden - Trump)
+
+# state polls
+state <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Pres2020_StatePolls.Rds')
+state <- state %>%
+  mutate(Trump = Trump/100,
+         Biden = Biden/100,
+         margin = Biden - Trump)
+
+```
+
+# Introducing the as.Date() function
+
+```{r}
+as.Date(x = "09/24/2024","%m/%d/%Y") - as.Date(x = "2006-02-23",
+                              "%Y-%m-%d")
+```
+
+# Apply to our data
+
+```{r}
+poll <- poll %>%
+  mutate(StartDate = as.Date(StartDate,"%m/%d/%Y"))
+
+poll %>%
+  ggplot(aes(x = StartDate)) + 
+  geom_histogram()
+
+poll %>%
+  ggplot(aes(x = StartDate)) + 
+  geom_bar()
+```
+
+# Multivariate visualization of timing versus margin
+
+```{r}
+poll %>%
+  ggplot(aes(x = StartDate,
+             y = margin)) + 
+  geom_point()
+```
+
+# Fixing the Y variable
+
+```{r}
+poll <- poll %>%
+  mutate(bidenErr = Biden - DemCertVote / 100,
+         trumpErr = Trump - RepCertVote / 100)
+
+# Visualize these
+poll %>%
+  ggplot(aes(x = StartDate,
+             y = bidenErr)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0,linetype = 'dashed') + 
+  geom_smooth()
+
+# Adding Trump
+poll %>%
+  ggplot(aes(x = StartDate)) + 
+  geom_point(aes(y = bidenErr),color = 'blue',alpha = .3) + 
+  geom_smooth(aes(y = bidenErr),color = 'blue') + 
+  geom_point(aes(y = trumpErr),color = 'red',alpha = .3) + 
+  geom_smooth(aes(y = trumpErr),color = 'red') + 
+  geom_hline(yintercept = 0,linetype = 'dashed') + 
+  labs(x = 'Date',
+       y = 'Prediction Error\n(blue = Biden, red = Trump)')
+```
+
+# Weighed averages
+
+- Some polls are better than others
+
+- Want to count (i.e., weight) those good polls more heavily than the bad polls
+
+```{r}
+weighted.mean(x = poll$Biden,
+              w = poll$SampleSize)
+
+weighted.mean(x = poll$Trump,
+              w = poll$SampleSize)
+
+# Margin of error weighting
+weighted.mean(x = poll$Trump,
+              w = -poll$MoE,na.rm=T)
+
+tmpPoll <- poll %>%
+  select(Trump,MoE) %>%
+  drop_na()
+
+weighted.mean(x = tmpPoll$Trump,
+              w = -tmpPoll$MoE)
+
+weighted.mean(x = poll$Trump,
+              w = as.numeric(poll$StartDate))
+```
+
+
+# Looking at State polls
+
+```{r}
+# state polls
+state <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/Pres2020_StatePolls.Rds')
+state <- state %>%
+  mutate(Trump = Trump/100,
+         Biden = Biden/100,
+         margin = Biden - Trump)
+```
+
+# Take all the states together
+
+```{r}
+state %>%
+  summarise(Biden = mean(Biden),
+            Trump = mean(Trump))
+
+# Method 1 for prediction: Who has more support?
+state %>%
+  mutate(BidenWin = ifelse(Biden > Trump,1,0))
+```
+
+
