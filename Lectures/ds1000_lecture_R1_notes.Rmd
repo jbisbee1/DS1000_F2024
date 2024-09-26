@@ -1,0 +1,77 @@
+---
+title: "Review session 2 notes"
+output: html_document
+date: "2024-09-26"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+
+poll <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/refs/heads/main/data/Pres2020_PV.Rds")
+
+state <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/refs/heads/main/data/Pres2020_StatePolls.Rds")
+
+
+```
+
+# Barplot of national polling mistakes
+
+```{r}
+poll %>%
+  ggplot() + 
+  geom_bar(aes(x = Biden),fill = 'blue',alpha = .3) + 
+  geom_bar(aes(x = Trump),fill = 'red',alpha = .3) + 
+  geom_vline(xintercept = 51,color = 'blue',linetype = 'dashed') + 
+  geom_vline(xintercept = mean(poll$RepCertVote,na.rm=T),color = 'red',linetype = 'dashed') + 
+  labs(x = "Predicted support:\nBiden (blue) and Trump (red)",
+       y = "Number of polls",
+       title = 'Poll Predictions',
+       subtitle = "2020 US Presidential Election") + 
+  theme_bw() + 
+  scale_x_continuous(labels = function(x) { paste0(x,'%')},
+                     breaks = c(35,40,45,50,55))
+```
+
+
+# Calculating proportions of types of polls
+
+```{r}
+summary(poll %>%
+          select(Biden,Trump))
+# Over-predict Biden, under-predict Trump
+poll %>%
+  mutate(Biden_error = Biden - DemCertVote,
+         Trump_error = Trump - RepCertVote) %>%
+  mutate(OPB_UPT = ifelse(test = Biden_error >= 0 & Trump_error < 0,
+                          yes = 1,
+                          no = 0)) %>%
+  summarise(OPB_UPT_prop = mean(OPB_UPT,na.rm=T))
+
+# Over-predict Trump, under-predict Biden
+poll %>%
+  mutate(Biden_error = Biden - DemCertVote,
+         Trump_error = Trump - RepCertVote) %>%
+  mutate(OPT_UPB = ifelse(test = Biden_error < 0 & Trump_error >= 0,
+                          yes = 1,
+                          no = 0)) %>%
+  summarise(OPT_UPB_prop = mean(OPT_UPB,na.rm=T))
+```
+
+# Creating scatterplot of Anti-Trump bias
+
+```{r}
+poll %>%
+  mutate(Biden_error = Biden - DemCertVote,
+         Trump_error = Trump - RepCertVote) %>%
+  ggplot(aes(x = Trump_error,
+             y = Biden_error)) + 
+  geom_point(alpha = .3,size = 3) + 
+  geom_smooth(method = 'lm') + 
+  geom_vline(xintercept = 0,linetype = 'dashed') + 
+  geom_hline(yintercept = 0,linetype = 'dashed')
+```
+
