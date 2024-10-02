@@ -1,0 +1,149 @@
+---
+title: "Untitled"
+output: html_document
+date: "2024-10-01"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Looking at turnovers by rookie
+
+```{r}
+require(tidyverse)
+nba <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/nba_players_2018.Rds')
+glimpse(nba %>% select(tov,isRookie))
+```
+
+# Step 1: Look
+
+```{r}
+summary(nba %>%
+          select(isRookie,tov))
+```
+
+# Looking at X
+
+```{r}
+nba %>%
+  ggplot(aes(y = isRookie)) + 
+  geom_bar()
+```
+
+# Looking at the Y variable
+
+```{r}
+nba %>%
+  ggplot(aes(x = tov)) + 
+  geom_histogram()
+```
+
+# Multivariate Analysis
+
+```{r}
+nba %>%
+  group_by(isRookie) %>%
+  summarise(avg_tov = mean(tov))
+```
+
+# Bootstrapping
+
+```{r}
+nba %>%
+  sample_n(size = nrow(nba),replace = T) %>%
+  select(namePlayer,tov,isRookie) %>%
+  group_by(isRookie) %>%
+  summarise(avg_tov = mean(tov))
+```
+
+# Introducing for() loops
+
+```{r}
+for(i in 1:10) {
+  print(i)
+}
+```
+
+# Putting them together
+
+```{r}
+set.seed(123)
+bsRes <- NULL
+for(i in 1:1000) {
+  bsRes <- nba %>%
+    sample_n(size = nrow(nba),replace = T) %>%
+    group_by(isRookie) %>%
+    summarise(avg_tov = mean(tov)) %>%
+    mutate(bs_index = i) %>%
+    bind_rows(bsRes)
+}
+
+bsRes
+```
+
+# Analyizing the bootstrapped results with pivot_wider()
+
+```{r}
+bsRes %>%
+  pivot_wider(names_from = c("isRookie"),
+              values_from = c("avg_tov"),
+              names_prefix = "Rookie_") %>%
+  mutate(diff = Rookie_FALSE - Rookie_TRUE) %>%
+  summarise(conf_rookieMore = mean(diff < 0),
+            conf_rookieLess = mean(diff > 0),
+            avg_diff = mean(diff))
+```
+
+# Visualize bootstrapped results
+
+```{r}
+# Approach #1: Two densities
+bsRes %>%
+  ggplot(aes(x = avg_tov,
+             fill = isRookie)) + 
+  geom_density(alpha = .3)
+
+# Approach #2: One density
+bsRes %>%
+  pivot_wider(names_from = c("isRookie"),
+              values_from = c("avg_tov"),
+              names_prefix = "Rookie_") %>%
+  mutate(diff = Rookie_FALSE - Rookie_TRUE) %>%
+  ggplot(aes(x = diff)) + 
+  geom_density() + 
+  geom_vline(xintercept = 0,linetype = 'dashed')
+```
+
+# New variable: pctFG
+
+
+
+```{r}
+set.seed(123)
+bsRes <- NULL
+for(i in 1:1000) {
+  bsRes <- nba %>%
+    sample_n(size = nrow(nba),replace = T) %>%
+    group_by(isRookie) %>%
+    summarise(avg_pctFG = mean(pctFG)) %>%
+    mutate(bs_index = i) %>%
+    bind_rows(bsRes)
+}
+
+bsRes %>%
+  pivot_wider(names_from = c("isRookie"),
+              values_from = c("avg_pctFG"),
+              names_prefix = "Rookie_") %>%
+  mutate(diff = Rookie_FALSE - Rookie_TRUE) %>%
+  summarise(conf_rookieMore = mean(diff < 0),
+            conf_rookieLess = mean(diff > 0),
+            avg_diff = mean(diff))
+```
+
+# Multiple comparisons in a single bootstrap
+
+```{r}
+nba
+```
+
