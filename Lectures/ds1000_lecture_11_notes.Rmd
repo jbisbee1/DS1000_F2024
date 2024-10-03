@@ -1,0 +1,132 @@
+---
+title: "Untitled"
+output: html_document
+date: "2024-10-03"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Loading the data
+
+```{r}
+require(tidyverse)
+games <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/refs/heads/main/data/game_summary.Rds")
+```
+
+# Look
+
+```{r}
+View(games)
+
+# Grab win and points and look at them
+glimpse(games %>%
+          select(isWin,pts))
+```
+
+# Bootstrap for inference
+
+```{r}
+set.seed(123)
+bsRes <- NULL
+for(i in 1:100) {
+  tmp <- games %>%
+    sample_n(size = nrow(games),replace = T) %>%
+    group_by(isWin) %>%
+    summarise(avg_pts = mean(pts,na.rm=T))
+  
+  bsRes <- bsRes %>%
+    bind_rows(tmp %>%
+                mutate(bsIndex = i))
+}
+
+# Look at the results
+bsRes %>%
+  pivot_wider(names_from = c('isWin'),
+              values_from = c('avg_pts')) %>%
+  mutate(diff_pts = `TRUE` - `FALSE`)
+
+bsRes_wide <- bsRes %>%
+  pivot_wider(names_from = c('isWin'),
+              values_from = c('avg_pts'),
+              names_prefix = 'isWin_') %>%
+  mutate(diff_pts = isWin_TRUE - isWin_FALSE)
+```
+
+# Calculate confidence
+
+```{r}
+bsRes_wide %>%
+  summarise(conf_win_bigger = mean(diff_pts > 0),
+            conf_lose_bigger = mean(diff_pts <= 0),
+            avg_diff = mean(diff_pts))
+```
+
+# Analyzing multiple variables
+
+```{r}
+set.seed(123)
+bsRes <- NULL
+for(i in 1:100) {
+  tmp <- games %>%
+    sample_n(size = nrow(.),replace = T) %>%
+    group_by(isWin) %>%
+    summarise(avg_pts = mean(pts,na.rm=T),
+              avg_tov = mean(tov,na.rm=T),
+              avg_treb = mean(treb,na.rm=T))
+  bsRes <- bsRes %>%
+    bind_rows(tmp %>%
+                mutate(bsIndex = i))
+}
+```
+
+# Pivot wider with multiple values
+
+```{r}
+bsRes_wide <- bsRes %>%
+  pivot_wider(names_from = 'isWin',
+              values_from = c('avg_pts','avg_tov','avg_treb')) %>%
+  mutate(diff_pts = avg_pts_TRUE - avg_pts_FALSE,
+         diff_tov = avg_tov_TRUE - avg_tov_FALSE,
+         diff_treb = avg_treb_TRUE - avg_treb_FALSE)
+```
+
+# Express confidence
+
+```{r}
+bsRes_wide %>%
+  summarise(conf_pts = mean(diff_pts > 0),
+            conf_tov = mean(diff_tov > 0),
+            conf_treb = mean(diff_treb > 0),
+            avg_pts = mean(diff_pts),
+            avg_tov = mean(diff_tov),
+            avg_treb  = mean(diff_treb))
+```
+
+# VIsualizing BS results: densities side-by-side
+
+```{r}
+bsRes %>%
+  ggplot(aes(x = avg_treb,fill = isWin)) + 
+  geom_density(alpha = .3)
+```
+
+# Visualizing BS results: single density of differences
+
+```{r}
+bsRes_wide %>%
+  ggplot(aes(x = diff_pts)) + 
+  geom_density() + 
+  geom_vline(xintercept = 0,linetype = 'dashed')
+```
+
+# Introducing facets
+
+```{r}
+games %>%
+  ggplot(aes(x = oreb)) + 
+  geom_density() + 
+  facet_wrap(~yearSeason,ncol = 1)
+```
+
