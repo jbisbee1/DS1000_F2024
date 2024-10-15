@@ -1,0 +1,89 @@
+---
+title: "Lecture 12 Notes"
+output: html_document
+date: "2024-10-15"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Getting started
+
+- Require `tidyverse`
+- Load `sc_debt.rds`
+- Research question: What is the relationship between future earnings and SAT scores?
+
+```{r}
+require(tidyverse)
+debt <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds')
+```
+
+# Univariate
+
+```{r}
+# Univariate of Y first
+debt %>%
+  ggplot(aes(x = md_earn_wne_p6)) + 
+  geom_density()
+
+# Univariate of X second
+debt %>%
+  ggplot(aes(x = sat_avg)) + 
+  geom_histogram()
+
+summary(debt %>%
+          select(md_earn_wne_p6,
+                 sat_avg))
+```
+
+# Multivariate VIsualization 
+
+```{r}
+debt %>%
+  ggplot(aes(x = sat_avg,
+             y = md_earn_wne_p6)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm')
+```
+
+
+# Estimating the line of best fit
+
+```{r}
+m <- lm(formula = md_earn_wne_p6 ~ sat_avg,
+   data = debt)
+
+# Two methods for getting more information from lm()
+# 1: summary(m)
+summary(m)
+```
+
+# New Research Question: Earnings and undergraduate size
+```{r}
+debt %>%
+  ggplot(aes(x = ugds)) + 
+  geom_histogram()
+
+# Looking at missingness
+summary(debt %>%
+          select(md_earn_wne_p6,
+                 ugds))
+
+# Multivariate visualization
+debt %>%
+  ggplot(aes(x = ugds,
+             y = md_earn_wne_p6)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm')
+
+# Regression model results:
+m2 <- lm(formula = md_earn_wne_p6 ~ ugds,
+         data = debt)
+
+summary(m2)
+
+require(broom)
+tidy(m2)
+```
+
