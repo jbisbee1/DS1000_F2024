@@ -4,7 +4,7 @@
     <title>Regression</title>
     <meta charset="utf-8" />
     <meta name="author" content="Prof. Bisbee" />
-    <script src="libs/header-attrs-2.22/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/lexis.css" type="text/css" />
     <link rel="stylesheet" href="css/lexis-fonts.css" type="text/css" />
@@ -26,7 +26,7 @@ class: center, middle, inverse, title-slide
 ### Vanderbilt University
 ]
 .date[
-### Slides Updated: 2024-08-10
+### Slides Updated: 2024-10-15
 ]
 
 ---
@@ -444,7 +444,7 @@ class: center, middle, inverse, title-slide
 - Let's demonstrate with the `debt` data
 
 
-```r
+``` r
 require(tidyverse)
 
 debt &lt;- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/sc_debt.Rds')
@@ -552,7 +552,7 @@ glimpse(debt)
 --
 
 
-```r
+``` r
 summary(debt %&gt;% select(sat_avg,md_earn_wne_p6))
 ```
 
@@ -586,7 +586,7 @@ summary(debt %&gt;% select(sat_avg,md_earn_wne_p6))
 - Why visualize both `\(Y\)` and `\(X\)`?
 
 
-```r
+``` r
 debt %&gt;%
   ggplot(aes(x = sat_avg)) + 
   geom_histogram()
@@ -601,7 +601,7 @@ debt %&gt;%
 - Why visualize both `\(Y\)` and `\(X\)`?
 
 
-```r
+``` r
 debt %&gt;%
   ggplot(aes(x = md_earn_wne_p6)) + 
   geom_histogram()
@@ -618,7 +618,7 @@ debt %&gt;%
 --
 
 
-```r
+``` r
 debt %&gt;%
   ggplot(aes(x = sat_avg,y = md_earn_wne_p6)) + 
   geom_point()
@@ -633,7 +633,7 @@ debt %&gt;%
 - Adding regression line
 
 
-```r
+``` r
 debt %&gt;%
   ggplot(aes(x = sat_avg,y = md_earn_wne_p6)) + 
   geom_point() + geom_smooth(method = 'lm',se = F)
@@ -648,7 +648,7 @@ debt %&gt;%
 - Let's focus on two schools
 
 
-```r
+``` r
 toplot &lt;- debt %&gt;%
   mutate(hl = ifelse(unitid %in% c(100654,179265),'hl','none')) # Choosing two examples
 p2 &lt;- toplot %&gt;%
@@ -672,7 +672,7 @@ p2 &lt;- toplot %&gt;%
 - Adding regression line
 
 
-```r
+``` r
 p2
 ```
 
@@ -685,7 +685,7 @@ p2
 - Defining `\(\varepsilon\)`
 
 
-```r
+``` r
 p3 &lt;- toplot %&gt;%
   ggplot(aes(x = sat_avg, y = md_earn_wne_p6,color = hl,group = 1,alpha = hl)) + 
   geom_point(data = toplot %&gt;% filter(hl == 'none')) + 
@@ -712,7 +712,7 @@ p3 &lt;- toplot %&gt;%
 - Measuring errors
 
 
-```r
+``` r
 p3
 ```
 
@@ -835,7 +835,7 @@ p3
 - Save the model to an object
 
 
-```r
+``` r
 model_earn_sat &lt;- lm(formula = md_earn_wne_p6 ~ sat_avg,data = debt)
 ```
 
@@ -850,7 +850,7 @@ model_earn_sat &lt;- lm(formula = md_earn_wne_p6 ~ sat_avg,data = debt)
 - The regression results! Look at them with `summary()`
 
 
-```r
+``` r
 summary(model_earn_sat)
 ```
 
@@ -936,7 +936,7 @@ summary(model_earn_sat)
 # Step 4: Interpretation
 
 
-```r
+``` r
 summary(model_earn_sat)
 ```
 
