@@ -90,6 +90,22 @@ Letter grades are determined as per the standard Vanderbilt grading system, repr
 - D-: 60-63
 - F: <60
 
+### Extra Credit opportunities
+
+Students who are below a C- in the class can make up missing problem sets by conducting an extra credit research assignment (up to 3). These involve the following steps:
+
+1. Search for an interesting dataset on kaggle.com.
+2. Ask a research question.
+3. Answer your own research question and provide a theoretically-justified explanation for why you expect to find support for your hypothesis.
+4. Email the professor with the answers to steps 1-3.
+5. After approval from the professor, conduct the following data science analyses:
+	- Univariate analyses of the X and Y variables
+	- Multivariate visualization of the X and Y variables
+	- Regression analysis of the relationship between the X and Y variables
+	- Evaluation of model fit via univariate and multivariate visualization of the errors
+	- Evaluation of model fit via k-fold cross validation to estimate RMSE
+6. Based on the analysis, write a short conclusion summarizing your findings.
+
 *[Back to ToC](#table-of-contents)*
 
 ## Course Policies
