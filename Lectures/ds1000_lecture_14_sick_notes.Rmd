@@ -1,0 +1,188 @@
+---
+title: "Lecture 13 Notes"
+output: html_document
+date: "2024-10-17"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Loading the data
+
+```{r}
+require(tidyverse)
+mv <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/refs/heads/main/data/mv.Rds")
+
+View(mv)
+```
+
+#@ Univariate visualization
+
+```{r}
+mv %>%
+  drop_na(gross,budget)%>%
+  ggplot(aes(x = gross)) + 
+  geom_histogram()
+
+# Logged version
+mv %>%
+  drop_na(gross,budget)%>%
+  mutate(log_gross = log(gross)) %>%
+  ggplot(aes(x = log_gross)) + 
+  geom_histogram()
+
+# Univariate visualization of X
+mv %>%
+  drop_na(gross,budget) %>%
+  ggplot(aes(x = budget)) + 
+  geom_density()
+
+mv %>%
+  drop_na(gross,budget) %>%
+  mutate(log_budget = log(budget)) %>%
+  ggplot(aes(x = log_budget)) + 
+  geom_density()
+```
+
+# Update our data object
+
+```{r}
+mv_analysis1 <- mv %>%
+  drop_na(gross,budget) %>%
+  mutate(log_gross = log(gross),
+         log_budget = log(budget))
+```
+
+# Multivariate analysis
+
+```{r}
+mv_analysis1 %>%
+  ggplot(aes(x = log_budget,
+             y = log_gross)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm')
+```
+
+# Running the regression
+
+```{r}
+m1 <- lm(formula = log_gross ~ log_budget,
+         data = mv_analysis1)
+
+require(broom)
+tidy(m1)
+
+# log(): converts from raw values to logged values (natural log)
+# exp(): converts from logged values to raw values
+
+exp(1.26)
+exp(0)
+
+# Y = a + b*X
+# Y = 1.26 + 0.964*X
+
+# I will spend 10m on a movie...how much will it make?
+exp(1.26 + 0.964*log(10000000))
+```
+
+# Calculating errors
+
+```{r}
+# e = Y - hat{Y}
+mv_analysis1 <- mv_analysis1 %>%
+  mutate(y_hat = predict(m1))
+
+mv_analysis1 <- mv_analysis1 %>%
+  mutate(error = log_gross - y_hat)
+
+# Univariate visualization of errors
+mv_analysis1 %>%
+  ggplot(aes(x = error)) + 
+  geom_histogram()
+
+# Multivariate visualization
+mv_analysis1 %>%
+  ggplot(aes(x = log_budget,
+             y = error)) + 
+  geom_point() + 
+  geom_smooth()
+```
+
+# Calculating RMSE
+
+```{r}
+mv_analysis1 %>%
+  select(log_gross,y_hat,error) %>%
+  mutate(se = error^2)  %>% # Squared error
+  summarise(mse = mean(se))  %>% # Mean Squared error
+  mutate(rmse = sqrt(mse))
+```
+
+# Using RMSE
+
+- Have a movie that costs $10m
+
+- Predict how much money it will earn
+
+```{r}
+tidy(m1)
+pred_y <- 1.26 + 0.964*log(10000000)
+exp(pred_y) # $19,733,815
+
+# Lower bound of our estimate
+exp(pred_y - 1.28) # $5,486,737
+
+# Upper bound of our estimate
+exp(pred_y + 1.28) # $70,975,422
+```
+
+# Cross validation
+
+```{r}
+set.seed(123)
+cvRes <- NULL
+
+for(i in 1:100) {
+# Step 1: split the data into training and test sets with NO OVERLAPPING OBSERVATIONS
+train <- mv_analysis1 %>%
+  select(log_gross,log_budget) %>%
+  sample_n(size = round(.5*nrow(mv_analysis1)),
+           replace = F)
+
+test <- mv_analysis1 %>%
+  select(log_gross,log_budget) %>%
+  anti_join(train)
+
+# Step 2: "train" the regression model using the training data
+mTmp <- lm(formula = log_gross ~ log_budget,
+           data = train)
+
+# tidy(mTmp)
+
+# Step 3: "test" our model using the test data
+test <- test %>%
+  mutate(y_hat = predict(mTmp,newdata = test))
+
+# Step 4: calculate RMSE
+cvResTmp <- test %>%
+  # summarise(rmse = sqrt(mean((log_gross - y_hat)^2)))
+  mutate(error = log_gross - y_hat) %>%
+  mutate(se = error^2) %>%
+  summarise(mse = mean(se)) %>%
+  mutate(rmse = sqrt(mse))
+
+cvRes <- cvRes %>%
+  bind_rows(cvResTmp %>%
+              mutate(cvInd = i))
+}
+
+cvRes %>%
+  summarise(mean_rmse = mean(rmse))
+
+cvRes %>%
+  ggplot(aes(x = rmse)) + 
+  geom_density()
+```
+
+
