@@ -1,0 +1,136 @@
+---
+title: "Lecture 13 Notes"
+output: html_document
+date: "2024-10-24"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Loading the data
+
+```{r}
+require(tidyverse)
+debt <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/refs/heads/main/data/sc_debt.Rds")
+```
+
+# Skipping: univariate, multivariate
+
+```{r}
+debt_analysis <- debt %>%
+  select(md_earn_wne_p6,sat_avg,costt4_a) %>%
+  drop_na()
+
+
+m_sat <- lm(formula = md_earn_wne_p6 ~ sat_avg,data = debt_analysis)
+require(broom)
+tidy(m_sat)
+
+m_cost <- lm(formula = md_earn_wne_p6 ~ costt4_a,data = debt_analysis)
+tidy(m_cost)
+
+```
+
+# Step 1: Visualize the errors
+
+```{r}
+debt_analysis <- debt_analysis %>%
+  mutate(y_hat_sat = predict(m_sat),
+         y_hat_cost = predict(m_cost))
+
+debt_analysis <- debt_analysis %>%
+  mutate(error_sat = md_earn_wne_p6 - y_hat_sat,
+         error_cost = md_earn_wne_p6 - y_hat_cost)
+
+# Univariate
+debt_analysis %>%
+  ggplot(aes(x = error_sat)) + 
+  geom_histogram()
+
+debt_analysis %>%
+  ggplot(aes(x = error_cost)) + 
+  geom_histogram()
+```
+
+# Multivariate visualization of errors
+
+```{r}
+debt_analysis %>%
+  ggplot(aes(x = sat_avg,
+             y = error_sat)) + 
+  geom_point() + 
+  geom_smooth()
+
+debt_analysis %>%
+  ggplot(aes(x = costt4_a,
+             y = error_cost)) + 
+  geom_point() + 
+  geom_smooth()
+```
+
+# Root Mean Squared Error (RMSE)
+
+```{r}
+debt_analysis %>%
+  mutate(se_sat = error_sat^2,
+         se_cost = error_cost^2) %>%
+  summarise(mse_sat = mean(se_sat),
+            mse_cost = mean(se_cost)) %>%
+  mutate(rmse_sat = sqrt(mse_sat),
+         rmse_cost = sqrt(mse_cost))
+```
+
+# Cross-validation
+
+```{r}
+set.seed(123)
+######################################################### BEGIN FOR LOOP HERE #####################################
+cvRes <- NULL
+for(i in 1:100) {
+train <- debt_analysis %>%
+  sample_n(size = round(.5*nrow(debt_analysis)),
+           replace = F)
+
+suppressMessages(test <- debt_analysis %>%
+  anti_join(train))
+
+# Step 2: Train our models
+m_sat_tmp <- lm(formula = md_earn_wne_p6 ~ sat_avg,
+                data = train)
+m_cost_tmp <- lm(formula = md_earn_wne_p6 ~ costt4_a,
+                data = train)
+
+# Step 3: Evaluate our models
+test <- test %>%
+  mutate(y_hat_sat = predict(m_sat_tmp,newdata = test),
+         y_hat_cost = predict(m_cost_tmp,newdata = test))
+
+# Step 4: Calculate RMSE
+tmpRes <- test %>%
+  # summarise(rmse_sat = sqrt(mean((md_earn_wne_p6 - y_hat_sat)^2)))
+  mutate(error_sat = md_earn_wne_p6 - y_hat_sat,
+         error_cost = md_earn_wne_p6 - y_hat_cost) %>%
+  mutate(se_sat = error_sat^2,
+         se_cost = error_cost^2) %>%
+  summarise(mse_sat = mean(se_sat),
+            mse_cost = mean(se_cost)) %>%
+  mutate(rmse_sat = sqrt(mse_sat),
+         rmse_cost = sqrt(mse_cost))
+
+ # Step 5: Save the result
+cvRes <- cvRes %>%
+  bind_rows(tmpRes %>%
+              mutate(cvIndex = i))
+}
+######################################################### END FOR LOOP HERE ####################################################
+```
+
+# Visualize RMSE results
+
+```{r}
+cvRes %>%
+  summarise(rmse_sat = mean(rmse_sat),
+            rmse_cost = mean(rmse_cost))
+```
+
