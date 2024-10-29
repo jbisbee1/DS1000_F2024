@@ -1,0 +1,130 @@
+---
+title: "Lecture 15 Notes"
+output: html_document
+date: "2024-10-29"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+
+mv <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/refs/heads/main/data/mv.Rds")
+```
+
+# Step 1: Look at the data
+
+```{r}
+mv %>%
+  ggplot(aes(x = bechdel_score)) + 
+  geom_bar()
+
+mv <- mv %>%
+  mutate(bechdel_binary = ifelse(bechdel_score == 3,'Pass','Fail'))
+
+mv %>%
+  ggplot(aes(x = bechdel_binary)) + 
+  geom_bar()
+
+# VIsualization of Y
+mv %>%
+  ggplot(aes(x = gross)) + 
+  geom_density()
+
+mv <- mv %>%
+  mutate(log_gross = log(gross))
+```
+
+# Running bivariate regression: gross ~ bechdel
+
+```{r}
+mv_analysis <- mv %>%
+  select(bechdel_binary,log_gross) %>%
+  drop_na()
+
+m <- lm(formula = log_gross ~ bechdel_binary,
+        data = mv_analysis)
+
+require(broom)
+tidy(m)
+
+# Intercept:
+scales::dollar(exp(18))
+
+# Slope:
+scales::dollar(exp(18-.233))
+```
+
+# Control for budget
+
+```{r}
+mv <- mv %>%
+  mutate(log_budget = log(budget))
+
+mv_analysis <- mv %>%
+  select(log_budget,log_gross,bechdel_binary) %>%
+  drop_na()
+
+m2 <- lm(formula = log_gross ~ bechdel_binary + log_budget,
+         data = mv_analysis)
+
+tidy(m2)
+```
+
+# New RQ: do ratings matter to gross?
+
+```{r}
+mv %>%
+  count(rating)
+
+mv <- mv %>%
+  mutate(rating_simple = ifelse(rating %in% c('G','PG','PG-13','R'),
+                                rating,
+                                NA))
+mv_analysis <- mv %>%
+  select(log_gross,rating_simple) %>%
+  drop_na()
+
+m3 <- lm(formula = 0 + log_gross ~ rating_simple,
+         data = mv_analysis %>%
+           mutate(rating_simple = factor(rating_simple,
+                                         levels = c('R','PG-13','PG','G'))))
+
+tidy(m3)
+
+
+scales::dollar(exp(19.1-2.43))
+scales::dollar(exp(19.1))
+
+mv_analysis %>%
+  count(rating_simple)
+```
+
+# Visualizing data
+
+```{r}
+mv %>%
+  drop_na(bechdel_binary) %>%
+  mutate(bechdel_binary_num = ifelse(bechdel_binary == "Pass",
+                                     1,
+                                     0)) %>%
+  ggplot(aes(x = bechdel_binary_num,
+             y = log_gross)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm')
+
+# Bechdel binary as a Y variable
+mv %>%
+  drop_na(bechdel_binary) %>%
+  mutate(bechdel_binary_num = ifelse(bechdel_binary == "Pass",
+                                     1,
+                                     0)) %>%
+  ggplot(aes(y = bechdel_binary_num,
+             x = log_budget)) + 
+  geom_jitter() + 
+  geom_smooth(method = 'lm')
+```
+
+
