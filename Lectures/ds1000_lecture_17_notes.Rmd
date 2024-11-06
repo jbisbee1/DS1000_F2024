@@ -1,0 +1,287 @@
+---
+title: "Lecture 15 Notes"
+output: html_document
+date: "2024-10-31"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Getting set up
+
+1. Load `fn_cleaned_final.rds` from course GitHub
+
+2. Look at the data
+
+3. What predicts winning a game of Fortnite (`won`)?
+
+```{r}
+require(tidyverse)
+fn <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/fn_cleaned_final.rds')
+
+glimpse(fn)
+
+fn <- fn %>%
+  rename(win = won)
+
+glimpse(fn)
+
+```
+
+# Look at `hits`
+
+```{r}
+# Univariate visualization
+# X: hits
+fn %>%
+  ggplot(aes(x = hits)) + 
+  geom_histogram()
+
+# Y: win
+fn %>%
+  ggplot(aes(x = win)) + 
+  geom_bar()
+
+```
+
+# Multivariate VIsualization
+
+```{r}
+fn %>%
+  ggplot(aes(x = hits,color = factor(win))) + 
+  geom_density()
+
+fn %>%
+  ggplot(aes(x = factor(win),
+             y = hits)) + 
+  geom_boxplot()
+
+# Bad idea: scatterplot
+fn %>%
+  ggplot(aes(x = hits,
+             y = win)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm')
+```
+
+# Add a second predictor: `mental_state`
+
+```{r}
+fn %>%
+  ggplot(aes(x = mental_state)) + 
+  geom_bar()
+
+# Multivariate Visualization:
+fn %>%
+  ggplot(aes(x = mental_state,
+             fill = factor(win))) + 
+  geom_bar(position = 'fill') + 
+  labs(y = 'Proportion of games')
+
+```
+
+# Trivariate visualization
+
+- Introducing `geom_tile()`
+
+```{r}
+fn %>%
+  group_by(mental_state,hits) %>%
+  summarise(prob_win = mean(win)) %>%
+  ggplot(aes(x = mental_state,
+             y = factor(hits),
+             fill = prob_win)) + 
+  geom_tile()
+```
+
+# Introducing: `ntile()`
+
+```{r}
+fn %>%
+  mutate(hits_decile = ntile(hits,n = 10)) %>%
+  group_by(hits_decile,mental_state) %>%
+  summarise(prob_win = mean(win)) %>%
+  ggplot(aes(x = mental_state,
+             y = factor(hits_decile),
+             fill = prob_win)) +
+  geom_tile()
+```
+
+# Simplest function: conditional means
+
+- Calculate the average win by mental state
+
+```{r}
+fn %>%
+  group_by(mental_state) %>%
+  summarise(prob_win = mean(win))
+
+# Step 1: use mutate() to add a column of predictions
+fnTmp <- fn %>%
+  group_by(mental_state) %>%
+  mutate(prob_win = mean(win)) %>%
+  select(mental_state,win,prob_win) %>%
+  mutate(error = win - prob_win,
+         pred_win = ifelse(prob_win > .25,
+                           1,
+                           0))
+
+fnTmp %>%
+  group_by(win,pred_win) %>%
+  summarise(nGames = n())
+
+fnTmp %>%
+  count(prob_win)
+
+
+# Calculate model's accuracy
+fnTmp %>%
+  group_by(win) %>%
+  mutate(total_games = n()) %>%
+  group_by(win,pred_win,total_games) %>%
+  summarise(nGames = n()) %>%
+  mutate(proportion_correct = nGames / total_games)
+```
+
+# Improving the model
+
+```{r}
+fn %>%
+  group_by(mental_state,hits) %>% # Calculate probability of winning
+  mutate(prob_win = mean(win)) %>%
+  mutate(pred_win = ifelse(prob_win > .4, # Convert probabilities back to 0 and 1 values
+                           1,
+                           0)) %>%
+  group_by(win) %>% # Calculate total games that were actually won or lost
+  mutate(total_games = n()) %>%
+  group_by(win,pred_win,total_games) %>% # Calculate model accuracy
+  summarise(nGames = n()) %>%
+  mutate(prop_correct = nGames / total_games) %>%
+  ungroup() %>%
+  mutate(prop_overall = sum(nGames*(win == pred_win)) / sum(nGames))
+
+fn %>%
+  summarise(mean(win))
+```
+
+# Throw it into a loop
+
+```{r,message=FALSE,warning=FALSE}
+threshRes <- NULL
+for(thresh in seq(0,1,by = 0.025)) {
+  tmp <- fn %>%
+  group_by(mental_state,hits) %>% # Calculate probability of winning
+  mutate(prob_win = mean(win)) %>%
+  mutate(pred_win = ifelse(prob_win > thresh, # Convert probabilities back to 0 and 1 values
+                           1,
+                           0)) %>%
+  group_by(win) %>% # Calculate total games that were actually won or lost
+  mutate(total_games = n()) %>%
+  group_by(win,pred_win,total_games) %>% # Calculate model accuracy
+  summarise(nGames = n()) %>%
+  mutate(prop_correct = nGames / total_games)
+  
+  threshRes <- threshRes %>%
+    bind_rows(tmp %>%
+                mutate(threshold = thresh))
+}
+
+threshRes
+```
+
+# Visualize the threshold results
+
+```{r}
+threshRes %>%
+  mutate(metric = ifelse(win == 0 & pred_win == 0,"Specificity",
+                         ifelse(win == 1 & pred_win == 1,"Sensitivity",
+                                NA))) %>%
+  drop_na(metric) %>%
+  ggplot(aes(x = threshold,
+             y = prop_correct,
+             color = metric)) + 
+  geom_line() + 
+  geom_vline(xintercept = 0.32)
+```
+
+# Visualize the ROC Curve (Receiver Operator Characteristic)
+
+```{r}
+threshRes %>%
+  mutate(metric = ifelse(win == 0 & pred_win == 0,"Specificity",
+                         ifelse(win == 1 & pred_win == 1,"Sensitivity",NA))) %>%
+  drop_na(metric) %>%
+  ungroup() %>%
+  select(prop_correct,metric,threshold) %>%
+  pivot_wider(names_from = 'metric',
+              values_from = 'prop_correct') %>%
+  ggplot(aes(x = 1-Specificity,
+             y = Sensitivity)) + 
+  geom_line() + 
+  geom_abline(slope = 1,intercept = 0,linetype = 'dotted') + 
+  xlim(c(0,1)) + 
+  ylim(c(0,1))
+```
+
+# Calculate AUC
+
+```{r}
+require(tidymodels)
+
+# Create data for the roc_auc() function
+forAUC <- fn %>%
+  group_by(mental_state,hits) %>%
+  mutate(prob_win = mean(win)) %>%
+  ungroup()
+
+# Convert true outcome to factor
+forAUC <- forAUC %>%
+  mutate(win = factor(win,levels = c('1','0')))
+
+roc_auc(data = forAUC,
+        win,
+        prob_win)
+```
+
+# Trying a bunch of models
+
+1. lm()
+2. glm()
+3. random forest
+
+```{r}
+# Linear regression
+glimpse(fn)
+m <- lm(win ~ mental_state + hits + player + eliminations + damage_taken,data = fn)
+
+summary(m)
+
+forAUC <- fn %>%
+  mutate(prob_win = predict(m)) %>%
+  select(prob_win,win) %>%
+  mutate(win = factor(win,levels = c('1','0')))
+
+roc_auc(data = forAUC,
+        win,
+        prob_win)
+
+# Logistic regression
+m2 <- glm(formula = win ~ mental_state + hits + player + eliminations + damage_taken,
+          data = fn,
+          family = binomial(link = 'logit'))
+
+summary(m2)
+
+# Calculate AUC
+forAUC <- fn %>%
+  mutate(prob_win = predict(m2,type = 'response')) %>%
+  select(prob_win,win) %>%
+  mutate(win = factor(win,levels = c('1','0')))
+
+roc_auc(data = forAUC,
+        win,
+        prob_win)
+
+```
+
