@@ -1,0 +1,139 @@
+---
+title: "Lecture 18 Notes"
+output: html_document
+date: "2024-11-12"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Getting set up
+
+1. Load `fn_cleaned_final.rds` from course GitHub
+
+2. Look at the data
+
+3. What predicts winning a game of Fortnite (`won`)?
+
+```{r}
+require(tidyverse)
+fn <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/fn_cleaned_final.rds')
+
+glimpse(fn)
+
+fn <- fn %>%
+  rename(win = won)
+
+glimpse(fn)
+
+```
+
+# Apply the logit model
+
+```{r}
+mLM <- lm(formula = win ~ distance_traveled,
+          data = fn)
+mLG <- glm(formula = win ~ distance_traveled,
+           data = fn,
+           family = binomial(link = "logit"))
+summary(mLM)
+summary(mLG)
+```
+
+# Evaluate the model
+
+```{r}
+require(tidymodels)
+
+forAUC <- fn %>%
+  mutate(prob_win_lm = predict(mLM),
+         prob_win_lg = predict(mLG,type = "response"),
+         win = factor(win,levels = c('1','0')))
+
+# Evaluate the linear model
+roc_auc(data = forAUC,
+        win,
+        prob_win_lm)
+
+# Evaluate the logit model
+roc_auc(data = forAUC,
+        win,
+        prob_win_lg)
+
+```
+
+# Running a random forest
+
+```{r}
+require(ranger)
+
+mRF <- ranger(formula = win ~ distance_traveled,
+              data = fn)
+
+forAUC <- fn %>%
+  mutate(prob_win_rf = predict(mRF,data = fn)$prediction,
+         win = factor(win,levels = c('1','0')))
+
+roc_auc(data = forAUC,
+        win,
+        prob_win_rf)
+
+```
+
+# Cross validation to the rescue
+
+```{r,message=F,warning=F}
+set.seed(123)
+cvRes <- NULL
+for(i in 1:100) {
+  # Step 1: Divide data into training and test sets
+  train <- fn %>%
+    sample_n(size = round(.7*nrow(fn)),replace = F)
+  
+  test <- fn %>%
+    anti_join(train)
+  
+  # Step 2: Train our models
+  mLM <- lm(formula = win ~ distance_traveled,data = train)
+  mLG <- glm(formula = win ~ distance_traveled,data = train,
+            family = binomial(link = "logit"))
+  mRF <- ranger(formula = win ~ distance_traveled,data = train,seed = 123)
+  
+  # Step 3: Predict models
+  test <- test %>%
+    mutate(prob_win_lm = predict(mLM,newdata = test),
+           prob_win_lg = predict(mLG,type = 'response',newdata = test),
+           prob_win_rf = predict(mRF,data = test)$prediction,
+           win = factor(win,levels = c('1','0')))
+  
+  # Step 4: Evaluate models with AUC
+  aucLM <- roc_auc(data = test,
+          win,
+          prob_win_lm)
+  aucLG <- roc_auc(data = test,
+                   win,
+                   prob_win_lg)
+  aucRF <- roc_auc(data = test,
+                   win,
+                   prob_win_rf)
+  
+  # Step 5: Putting it all together
+  tmpRes <- aucLM %>%
+    mutate(model = "Linear") %>%
+    bind_rows(aucLG %>%
+                mutate(model = "Logit")) %>%
+    bind_rows(aucRF %>%
+                mutate(model = 'RF'))
+  
+  cvRes <- cvRes %>%
+    bind_rows(tmpRes %>%
+                mutate(cvIndex = i))
+}
+
+cvRes %>%
+  ggplot(aes(x = .estimate,
+             y = model)) + 
+  geom_boxplot()
+```
+
