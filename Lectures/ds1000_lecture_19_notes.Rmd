@@ -1,0 +1,121 @@
+---
+title: "Lecture 19 Notes"
+output: html_document
+date: "2024-11-14"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Getting set up
+
+1. Load `fn_cleaned_final.rds` from course GitHub
+
+2. Look at the data
+
+3. What predicts winning a game of Fortnite (`won`)?
+
+```{r}
+require(tidyverse)
+fn <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/fn_cleaned_final.rds')
+
+glimpse(fn)
+
+fn <- fn %>%
+  rename(win = won)
+
+glimpse(fn)
+
+```
+
+# Kitchen Sink Random Forest
+
+```{r,warning = F,message = F}
+cols <- colnames(fn)
+outcome <- cols[6]
+Xs <- cols[c(7,10,15,19)]
+
+rhs_formula <- paste(Xs,collapse = ' + ')
+full_formula <- paste(outcome,"~",rhs_formula)
+
+require(ranger)
+rf_full <- ranger(formula = full_formula,
+                  data = fn)
+
+# Quick cross-validation
+require(tidymodels)
+set.seed(123)
+cvRes <- NULL
+for(i in 1:100) {
+  # Step 1: Split the data
+  train <- fn %>%
+    sample_n(size = round(.7*nrow(fn)),replace = F)
+  test <- fn %>%
+    anti_join(train)
+  # Step 2: train the models
+  rf_m <- ranger(formula = full_formula,
+                 data = train)
+  # Step 3: predict the model on the new test dataset
+  test <- test %>%
+    mutate(prob_win = predict(rf_m,data = test)$prediction)
+  # Step 4: Evaluate via AUC
+  forAUC <- test %>%
+    mutate(win = factor(win,levels = c('1','0')))
+  cvRes <- cvRes %>%
+    bind_rows(roc_auc(data = forAUC,
+          win,
+          prob_win))
+}
+
+cvRes %>%
+  summarise(mean_auc = mean(.estimate))
+```
+
+# Introducing variable importance
+
+```{r}
+rf_vimp <- ranger(formula = full_formula,
+                  data = fn,
+                  importance = "permutation")
+
+rf_vimp$variable.importance
+
+# Turn this into a plot
+data.frame(variable = names(rf_vimp$variable.importance),
+           vimp = rf_vimp$variable.importance) %>%
+  ggplot(aes(x = vimp,
+             y = reorder(variable,vimp))) + 
+  geom_bar(stat = 'identity')
+```
+
+# k-means cluster analysis
+
+```{r}
+library(tidyverse)
+dat <- read_csv('https://raw.githubusercontent.com/jbisbee1/DS1000_F2024/refs/heads/main/data/H097_members.csv')
+glimpse(dat)
+dat %>%
+  select(nominate_dim1,
+         nominate_dim2) %>%
+  ggplot(aes(x = nominate_dim1,
+             y = nominate_dim2)) + 
+  geom_point()
+
+# Apply the k-means algorithm
+km_out <- kmeans(x = dat %>% select(nominate_dim1,
+                          nominate_dim2),
+       centers = 2,
+       nstart = 1)
+
+dat %>%
+  mutate(km_party = km_out$cluster) %>%
+  select(nominate_dim1,
+         nominate_dim2,
+         km_party) %>%
+  ggplot(aes(x = nominate_dim1,
+             y = nominate_dim2,
+             color = factor(km_party))) + 
+  geom_point()
+```
+
