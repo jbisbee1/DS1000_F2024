@@ -1,0 +1,113 @@
+---
+title: "Lecture 20 Notes"
+output: html_document
+date: "2024-11-19"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+tweet_words <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/refs/heads/main/data/Trump_tweet_words.Rds")
+```
+
+# Step 1: Create DTM (document term matrix)
+
+```{r}
+tweet_words %>%
+  count(word) %>%
+  arrange(desc(n))
+
+# Create document term matrix
+dtm <- tweet_words %>%
+  filter(Tweeting.date > as.Date('2016-11-08')) %>%
+  count(document,word)
+
+# Let's consider the day as the "document"
+dtm <- tweet_words %>%
+  filter(Tweeting.date > as.Date('2016-11-08')) %>%
+  count(Tweeting.date,word)
+
+dtm %>%
+  filter(Tweeting.date > as.Date('2017-01-20'))
+```
+
+# Calculate the "frequency" with which words appear in documents
+
+```{r}
+dtm <- dtm %>%
+  group_by(word) %>%
+  mutate(tot_n = sum(n)) %>%
+  ungroup()
+
+dtm %>%
+  arrange(tot_n)
+
+dtm <- dtm %>%
+  filter(tot_n > 20)
+
+dtm %>%
+  arrange(desc(tot_n))
+```
+
+# Calculate TF-IDF
+```{r}
+require(tidytext)
+dtm.tfidf <- bind_tf_idf(tbl = dtm,
+                         term = word,
+                         document = Tweeting.date,
+                         n = n)
+
+dtm.tfidf %>%
+  select(Tweeting.date,word,tf_idf)
+```
+
+# Convert the dtm to a wide object with cast_dtm()
+
+```{r}
+castdtm <- cast_dtm(data = dtm.tfidf,
+         document = Tweeting.date,
+         term = word,
+         value = tf_idf)
+
+castdtm$nrow
+castdtm$ncol
+```
+
+# K-means on the castdtm
+
+```{r}
+set.seed(123)
+km_out <- kmeans(castdtm,
+                 centers = 50)
+```
+
+# Visualizing a topic model
+
+```{r}
+# Step 1: Assign the km_out results to the dtm
+require(tidymodels)
+toplot <- tidy(km_out) %>%
+  pivot_longer(names_to = 'word',
+               values_to = 'mean_tfidf',
+               cols = c(-size,-cluster,-withinss))
+
+# Step 2: Visualize the first 3 clusters / topics
+toplot %>%
+  filter(cluster %in% 1:3) %>%
+  group_by(cluster) %>%
+  arrange(desc(mean_tfidf)) %>%
+  slice(1:10) %>%
+  ggplot(aes(x = mean_tfidf,
+             y = reorder(word,mean_tfidf),
+             fill = factor(cluster))) + 
+  geom_bar(stat = 'identity') + 
+  facet_wrap(~cluster,
+       scales = 'free') + 
+  labs(x = 'Mean TF-IDF',
+       y = 'Word',
+       fill = 'Cluster ID')
+```
+
