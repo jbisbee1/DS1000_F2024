@@ -1,0 +1,146 @@
+---
+title: "Lecture 21 Notes"
+output: html_document
+date: "2024-11-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+require(tidytext)
+require(tidymodels)
+tweet_words <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/refs/heads/main/data/Trump_tweet_words.Rds")
+```
+
+# Step 1: Create DTM (document term matrix)
+
+```{r}
+# Create document term matrix
+dtm <- tweet_words %>%
+  filter(Tweeting.date > as.Date('2016-01-01'),
+         Tweeting.date < as.Date('2017-01-01')) %>%
+  count(Tweeting.date,word)
+
+# Filter to words that appear more than 10 times
+dtm <- dtm %>%
+  group_by(word) %>%
+  mutate(tot_n = sum(n)) %>%
+  ungroup() %>%
+  filter(tot_n > 10)
+```
+
+# Calculate TF-IDF measure
+
+```{r}
+dtm.tfidf <- bind_tf_idf(tbl = dtm,
+                         term = word,
+                         document = Tweeting.date,
+                         n = n)
+
+dtm.tfidf %>%
+  select(Tweeting.date,word,tf_idf) %>%
+  arrange(desc(tf_idf))
+```
+
+# Step 3: Calculate k-means
+
+```{r}
+castdtm <- cast_dtm(data = dtm.tfidf,
+                    document = Tweeting.date,
+                    term = word,
+                    value = tf_idf)
+
+# k-means
+# To determine how many topics is optimal, use an elbow plot
+toplot <- NULL
+set.seed(123)
+for(k in c(2,10,20,30,50,70,100,150,200,250,300)) {
+  km_out_tmp <- kmeans(castdtm,
+                       centers = k)
+  toplot <- toplot %>%
+    bind_rows(data.frame(totWSS = km_out_tmp$tot.withinss,
+             k = k))
+  print(k)
+}
+
+# Create elbow plot
+toplot %>%
+  ggplot(aes(x = k,
+             y = totWSS,
+             label = round(totWSS))) + 
+  geom_point() + 
+  geom_line() + 
+  geom_label()
+```
+
+# Apply the optimal k
+
+```{r}
+set.seed(123)
+km_out <- kmeans(x = castdtm,
+                 center = 100)
+
+km_out_tidy <- tidy(km_out) %>%
+  pivot_longer(cols = c(-size,-cluster,-withinss),
+               names_to = 'word',
+               values_to = 'mean_tfidf')
+
+km_out_tidy %>%
+  arrange(desc(size))
+
+km_out_tidy %>%
+  filter(cluster == 61) %>%
+  arrange(desc(mean_tfidf)) %>%
+  slice(1:10) %>%
+  ggplot(aes(x = mean_tfidf,
+             y = reorder(word,mean_tfidf))) + 
+  geom_bar(stat = 'identity')
+
+# Find the top 3 most commonly used topics
+top3_topics <- km_out_tidy %>%
+  select(cluster,size) %>%
+  distinct() %>%
+  arrange(desc(size)) %>%
+  slice(1:3)
+
+# Plot top 3 topics' top 10 words
+km_out_tidy %>%
+  filter(cluster %in% top3_topics$cluster) %>%
+  group_by(cluster) %>%
+  arrange(desc(mean_tfidf)) %>%
+  slice(1:10) %>%
+  ggplot(aes(x = mean_tfidf,
+             y = reorder(word,mean_tfidf),
+             fill = factor(cluster))) + 
+  geom_bar(stat = 'identity') + 
+  facet_wrap(~cluster,scales = 'free')
+```
+
+# Introducing sentiment
+
+```{r}
+require(tidytext)
+nrc <- get_sentiments("nrc")
+nrc <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/refs/heads/main/data/nrc.Rds")
+
+nrc %>%
+  filter(word == 'vote')
+
+nrc <- nrc %>%
+  filter(sentiment %in% c('negative','positive'))
+
+# Attach the sentiments to our data
+km_out_tidy %>%
+  filter(cluster == 61) %>%
+  inner_join(nrc,by = c('word')) %>%
+  pivot_wider(names_from = "sentiment",
+              values_from = "mean_tfidf",
+              values_fill = 0) %>%
+  mutate(net_sentiment = positive - negative) %>%
+  
+
+```
+
