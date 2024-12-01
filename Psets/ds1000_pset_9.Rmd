@@ -239,7 +239,7 @@ km_out_tidy %>%
 > Write answer here
 
 ## Extra Credit [2 points]
-*Load the sentiment dictionary `nrc` from the `tidytext` package, and look at the clusters with sentiment scores by merging the `km_out_tidy` dataset with the `nrc` dataset using the `inner_join()` function. (If you can't open the `nrc` object from the `tidytext` package, you can just load it from GitHub with this link: `https://github.com/jbisbee1/DS1000_F2024/raw/main/data/nrc.Rds`). Filter to only look at `positive` and `negative` categories and then `select()` only the `size`, `cluster`, `word`, `mean_tfidf`, and `sentiment` columns. Then use `pivot_wider()` to create two columns of `mean_tfidf` values: one for `positive` and one for `negative`. Replace `NA` values with 0! Finally, filter to only look at clusters with more than 20 tweets in them. Save this processed data to an object named `cluster_sentiment`. [1 point]*
+*Load the sentiment dictionary `nrc` from the `tidytext` package, and look at the clusters with sentiment scores by merging the `km_out_tidy` dataset with the `nrc` dataset using the `inner_join()` function. (If you can't open the `nrc` object from the `tidytext` package, you can just load it from GitHub with this link: `https://github.com/jbisbee1/DS1000_F2024/raw/main/data/nrc.Rds`). Filter to only look at `positive` and `negative` categories and then `select()` only the `size`, `cluster`, `word`, `mean_tfidf`, and `sentiment` columns. Then use `pivot_wider()` to create two columns of `mean_tfidf` values: one for `positive` and one for `negative`. Replace `NA` values with 0! Finally, filter to only look at clusters with more than 20 tweets in them. Save this processed data to an object named `cluster_sentiment`. [1 point] Using this data, plot the top 10 words for the three most negative clusters. Describe what you see. What are Trump’s most negative topics about? [1 point]*
 
 ```{r,warning=F}
 nrc <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/nrc.Rds') # Load the NRC dictionary
@@ -248,3 +248,4 @@ nrc <- read_rds('https://github.com/jbisbee1/DS1000_F2024/raw/main/data/nrc.Rds'
 ```
 
 > Write answer here
+
