@@ -1,0 +1,87 @@
+---
+title: "Final Review Notes"
+output: html_document
+date: "2024-12-05"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+require(tidyverse)
+fn <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/refs/heads/main/data/fn_cleaned_final.rds")
+```
+
+# Step 1: Apply k-means to subset of data
+
+```{r}
+colnames(fn)
+fn_for_kmeans <- fn %>%
+  select(accuracy,hits,head_shots,assists)
+
+set.seed(123)
+km_out <- kmeans(fn_for_kmeans,
+                 center = 20,
+                 nstart = 10)
+
+km_out$cluster
+```
+
+# Step 2: Incorporate the cluster into the original data
+
+```{r}
+fn <- fn %>%
+  mutate(cluster = km_out$cluster)
+```
+
+# Step 3: regression analysis
+
+```{r}
+m_glm <- glm(formula = won ~ factor(cluster),
+             data = fn,
+             family = binomial(link = 'logit'))
+
+require(broom)
+tidy(m_glm)
+
+# Evaluate the model performance
+require(tidymodels)
+
+forAUC <- fn %>%
+  mutate(truth = factor(won,levels = c('1','0')),
+         pred = predict(m_glm,type = 'response'))
+
+roc_auc(data = forAUC,truth,pred)
+```
+
+# Looking at control variables
+
+```{r}
+mv <- read_rds("https://github.com/jbisbee1/DS1000_F2024/raw/refs/heads/main/data/mv.Rds")
+
+colnames(mv)
+
+mv %>%
+  ggplot(aes(x = gross)) + 
+  geom_density()
+
+mv <- mv %>%
+  mutate(gross_log = log(gross),
+         budget_log = log(budget))
+
+# Regress movie revenue on bechdel score
+m1 <- lm(formula = gross_log ~ bechdel_score,
+         data = mv)
+
+tidy(m1)
+
+# Control for movie's budget
+m2 <- lm(formula = gross_log ~ bechdel_score + budget_log + factor(genre) + factor(rating),
+         data = mv)
+
+tidy(m2)
+
+
+```
+
